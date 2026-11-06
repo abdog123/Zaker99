@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>99% – لوحة الإدارة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F2FB;--sf:#fff;--sf2:#ECE9F8;--ink:#1B1740;--mu:#6B6894;--ac:#5B3DF5;--acT:#fff;--gd:#F5A524;--bd:#DDD8F2;--ok:#12A36B;--er:#E5484D;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root{--bg:#120F29;--sf:#1C1840;--sf2:#262150;--ink:#F1EEFF;--mu:#9C98C8;--ac:#8B74FF;--acT:#120F29;--gd:#FFC25A;--bd:#2F2A5E}}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+body{font-family:Cairo,Tahoma,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:40px}
+.w{max-width:820px;margin:0 auto;padding:16px}
+h2{font-size:20px;font-weight:800}h3{font-size:16px;font-weight:800;margin-bottom:8px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px}
+.mu{color:var(--mu);font-size:13px}
+input,select,textarea{width:100%;font:inherit;padding:11px 13px;border-radius:12px;border:1.5px solid var(--bd);background:var(--bg);color:var(--ink);margin-bottom:10px}
+textarea{min-height:80px;resize:vertical}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:3px solid var(--ac);outline-offset:1px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:12px;padding:11px 16px;background:var(--ac);color:var(--acT);cursor:pointer;font-size:15px}
+.btn.s{background:var(--sf2);color:var(--ink)}.btn.d{background:var(--er);color:#fff}.btn.w2{width:100%}
+.row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}.row>*{flex:1;min-width:110px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}
+.chip{font:inherit;font-weight:600;padding:7px 13px;border-radius:999px;border:1.5px solid var(--bd);background:var(--sf);color:var(--ink);cursor:pointer;font-size:13px}
+.chip.on{background:var(--ac);color:var(--acT);border-color:var(--ac)}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:12px 0}.tabs button{flex:none;font:inherit;font-weight:800;border:0;background:var(--sf2);color:var(--mu);padding:10px 16px;border-radius:12px;cursor:pointer}.tabs button.on{background:var(--ac);color:var(--acT)}
+.top{display:flex;justify-content:space-between;align-items:center}
+.gr{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:12px}
+.st{background:var(--sf);border:1px solid var(--bd);border-radius:14px;padding:12px;text-align:center}.st b{display:block;font-size:24px;font-weight:900}
+.u{display:flex;align-items:center;gap:10px;cursor:pointer}.u .a{width:42px;height:42px;border-radius:50%;background:var(--gd);color:#2a1c00;display:grid;place-items:center;font-weight:900;flex:none}
+.u .i{flex:1;min-width:0}.u .i b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tag{font-size:11px;font-weight:800;padding:2px 9px;border-radius:9px;background:var(--sf2)}.tag.r{background:var(--er);color:#fff}.tag.g{background:var(--ok);color:#fff}
+.sw{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--bd)}.sw:last-child{border:0}
+.sw input{width:24px;height:24px;margin:0}
+.pr{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--bd)}.pr:last-child{border:0}.pr span{flex:1}.pr input{width:96px;margin:0}.pr label{font-size:12px;color:var(--mu);display:flex;gap:4px;align-items:center}.pr label input{width:18px;height:18px}
+#toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:600;z-index:30;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90%;text-align:center}
+#toast.on{opacity:1}#toast.err{background:var(--er);color:#fff}#toast.ok{background:var(--ok);color:#fff}
+#md{position:fixed;inset:0;background:rgba(10,8,30,.6);display:none;align-items:flex-end;justify-content:center;z-index:20}#md.on{display:flex}
+#md>div{background:var(--sf);width:100%;max-width:640px;border-radius:22px 22px 0 0;padding:20px;max-height:92vh;overflow:auto}
+@media (min-width:700px){#md{align-items:center}#md>div{border-radius:22px}}
+.sec{border-top:1px solid var(--bd);padding-top:12px;margin-top:12px}
+</style>
+</head>
+<body>
+<div id="app" class="w"></div><div id="toast"></div><div id="md"><div id="mb"></div></div>
+<script>
+const CORE=(function(){
+const TZ=2,PR0={av:{a1:300,a2:400,a3:900,a4:500,a5:700,a6:1000},skin:{ocean:800,sunset:1000,forest:1200,royal:1800},cskin:{ice:1200,toxic:1500,gold:2200,neon:2600},btn:{pill:600,sharp:600,glow:1500},nav:{float:900,mini:700},ns:{gold:700,fire:1000,neon:1400,rain:2000}};
+const NMS=['أحمد المنصوري','مريم خالد','يوسف عادل','نور هشام','سلمى طارق','عمر حسام','هدى سمير','كريم ناصر','آية محمود','مصطفى رضا','ليلى أشرف','زياد وائل'];
+const nph=p=>String(p==null?'':p).replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c)).replace(/[\s-]/g,'');
+const err=(e,x)=>Object.assign({ok:0,e},x||{}),ok=x=>Object.assign({ok:1,now:Date.now()},x||{});
+const CH='abcdefghjkmnpqrstuvwxyz23456789',rnd=n=>{let s='';for(let i=0;i<n;i++)s+=CH[Math.floor(Math.random()*CH.length)];return s};
+function sha(s){const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+const u8=unescape(encodeURIComponent(s)),n=u8.length,m=new Array(((n+8>>6)+1)*16).fill(0);
+for(let i=0;i<n;i++)m[i>>2]|=u8.charCodeAt(i)<<(24-(i%4)*8);m[n>>2]|=0x80<<(24-(n%4)*8);m[m.length-1]=n*8;
+let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const R=(x,k)=>(x>>>k)|(x<<(32-k));
+for(let i=0;i<m.length;i+=16){const w=m.slice(i,i+16);for(let t=16;t<64;t++){const x=w[t-15],y=w[t-2];w[t]=(w[t-16]+(R(x,7)^R(x,18)^(x>>>3))+w[t-7]+(R(y,17)^R(y,19)^(y>>>10)))|0}
+let[a,b,c,d,e,f,g,h]=H;for(let t=0;t<64;t++){const t1=(h+(R(e,6)^R(e,11)^R(e,25))+((e&f)^(~e&g))+K[t]+w[t])|0,t2=((R(a,2)^R(a,13)^R(a,22))+((a&b)^(a&c)^(b&c)))|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0}
+H=[H[0]+a|0,H[1]+b|0,H[2]+c|0,H[3]+d|0,H[4]+e|0,H[5]+f|0,H[6]+g|0,H[7]+h|0]}
+return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
+function sd(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return()=>{h^=h<<13;h^=h>>>17;h^=h<<5;return((h>>>0)%1000)/1000}}
+const lvl=p=>Math.floor(Math.sqrt(p/20))+1,dayS=t=>new Date(t+TZ*36e5).toISOString().slice(0,10);
+function botPts(ch,id,now){const r=sd(ch.code+id),end=ch.end||now,W=18e5,b=Math.floor((end-ch.start)/W),lv=.4+r()*.5;let t=0;
+for(let i=0;i<=b;i++){const x=r(),f=i<b?1:((end-ch.start)%W)/W,hr=(new Date(ch.start+i*W).getUTCHours()+TZ)%24;if(hr>=7)t+=Math.round(Math.min(30,30*lv*(.6+x*.8))*f)}return t}
+const myP=(ch,id,now)=>Math.floor((((ch.sec&&ch.sec[id])||0)+(ch.run&&ch.run[id]?(now-ch.run[id])/1000:0))/60);
+const live=ch=>ch.members.filter(m=>!(ch.out&&ch.out[m]));
+const rdyOf=(ch,id,now)=>id[0]=='b'?now-((ch.bt&&ch.bt[id])||0)>6000+sd(id)()*26000:(ch.ready||[]).includes(id);
+const allRdy=(ch,now)=>ch.members.length>=2&&ch.members.every(id=>rdyOf(ch,id,now));
+const eok=(q,m,now)=>m[0]=='b'?now-q.t>8000+sd(m+q.t)()*30000:q.ok.includes(m);
+const chkEnd=(ch,now)=>!!ch.endReq&&live(ch).every(m=>eok(ch.endReq,m,now));
+function addMsg(ch,id,now){ch.msgs=(ch.msgs||[]).filter(m=>now-m.t<60000);ch.msgs.push({by:id,t:now})}
+function touch(x,m,now){x.log=x.log||[];const d=dayS(now);x.log.push({d,m});if(x.log.length>400)x.log.splice(0,x.log.length-400);if(x.last!=d){x.streak=x.last==dayS(now-864e5)?(x.streak||0)+1:1;x.last=d}}
+const nrm=u=>{['friends','fr','sent','civ','notes','inv','chs','tasks','log'].forEach(k=>u[k]=u[k]||[]);u.eq=u.eq||{};u.pts=u.pts||0;u.spent=u.spent||0;u.streak=u.streak||0;return u};
+const pub=u=>{const c=Object.assign({},u);delete c.hash;delete c.toks;delete c.salt;delete c.fl;return c};
+const cfgOf=S=>{const c=S.get('cfg','main')||{};c.f=Object.assign({signup:1,shop:1,chal:1,quran:1},c.f||{});c.pr=c.pr||{};c.admToks=c.admToks||[];return c};
+const pubCfg=c=>({f:c.f,pr:c.pr,ann:c.ann||null});
+function profs(S,ids){const o={};[...new Set(ids)].slice(0,60).forEach(id=>{if(!id||id[0]=='b')return;const u=S.get('users',id);if(u)o[id]={name:u.name,eq:u.eq||{},lv:lvl((u.pts||0)+(u.spent||0))}});return o}
+function bank(S,ch,id,now,u){ch.sec=ch.sec||{};ch.lg=ch.lg||{};if(!ch.run||!ch.run[id])return;const s=(ch.sec[id]||0)+Math.max(0,Math.floor((now-ch.run[id])/1000));ch.sec[id]=s;ch.run[id]=0;
+const m=Math.floor(s/60)-(ch.lg[id]||0);if(m>0&&id[0]!='b'){ch.lg[id]=Math.floor(s/60);const mine=u&&u.phone==id,x=mine?u:S.get('users',id);if(x){nrm(x);touch(x,m,now);if(!mine)S.set('users',id,x)}}}
+function scores(S,ch,now){const nmOf=id=>id[0]=='b'?id.split('_')[2]:((S.get('users',id)||{}).name||id);return ch.members.map(id=>({id,n:nmOf(id),o:!!(ch.out&&ch.out[id]),p:id[0]=='b'?botPts(ch,id,now):myP(ch,id,now)})).sort((a,b)=>b.p-a.p)}
+function endCh(S,ch,now,u){ch.members.forEach(id=>{if(id[0]!='b')bank(S,ch,id,now,u)});ch.end=now;ch.status='ended';ch.endReq=null;
+const s=scores(S,ch,now).filter(x=>!x.o),top=s[0],tie=s.length>1&&s[1].p==top.p,aw={};
+if(top.p>0)s.forEach(x=>{aw[x.id]=tie?x.p:x.id==top.id?top.p:Math.floor(top.p/4)});
+ch.res={win:tie?null:top.id,wn:top.n,prize:top.p,aw:Object.assign({},aw,ch.sur||{}),tie};
+Object.keys(aw).forEach(id=>{if(id[0]=='b')return;const mine=u&&u.phone==id,w=mine?u:S.get('users',id);if(!w)return;nrm(w);w.pts+=aw[id];w.notes.push(tie?`تعادل في تحدي «${ch.name}». أخدت ${aw[id]} نقطة.`:id==top.id?`مبروك يا ${w.name}! فزت في تحدي «${ch.name}» وأخدت ${aw[id]} نقطة في حسابك.`:`انتهى تحدي «${ch.name}» والفايز ${top.n}. أخدت ${aw[id]} نقطة.`);if(!mine)S.set('users',id,w)});return ch}
+function tickPure(ch,now){let r=0;
+if(ch.status=='lobby'){ch.bm=ch.bm||[];ch.members.forEach(id=>{if(id[0]=='b'&&rdyOf(ch,id,now)&&!ch.bm.includes(id)){ch.bm.push(id);addMsg(ch,id,now);r=1}});
+if(allRdy(ch,now)){if(!ch.cd){ch.cd=now;r=1}else if(now-ch.cd>=5000){ch.status='active';ch.start=now;ch.cd=null;r=1}}else if(ch.cd){ch.cd=null;r=1}}
+else if(ch.status=='active'&&chkEnd(ch,now))r=2;return r}
+const getCh=(S,d)=>S.get('chs',String(d.code||'').toUpperCase());
+const isM=(ch,u)=>ch&&ch.members.includes(u.phone);
+const A={
+me:(S,u,d,now)=>{const chl=[],runs=[];u.chs.slice(-15).forEach(c=>{const ch=S.get('chs',c);if(!ch)return;chl.push({code:ch.code,name:ch.name,status:ch.status,members:ch.members});if(ch.status=='active'&&ch.run&&ch.run[u.phone])runs.push(c)});
+if(now-(u.seen||0)>3e5)S.lock(()=>{const x=S.get('users',u.phone);if(x){x.seen=now;S.set('users',x.phone,x)}});
+return{cfg:pubCfg(cfgOf(S)),chl,runs,profs:profs(S,[...u.friends,...u.fr,...u.sent,...u.civ.map(v=>v.by)])}},
+prof:(S,u,d)=>({profs:profs(S,d.ids||[])}),
+push:(S,u,d)=>{if(Array.isArray(d.tasks))u.tasks=d.tasks.slice(0,200);if(d.plan!==undefined)u.plan=d.plan;return{}},
+noteDel:(S,u,d)=>{u.notes.splice(+d.i,1);return{}},
+study:(S,u,d,now)=>{const m=Math.floor(+d.m);if(!(m>=1&&m<=480))return err('المدة غير صحيحة.');const t=u.log.filter(l=>l.d==dayS(now)).reduce((a,l)=>a+l.m,0);if(t+m>1000)return err('وصلت للحد الأقصى للمذاكرة اليوم.');touch(u,m,now);u.pts+=m;return{}},
+buy:(S,u,d)=>{const k=d.k,id=d.id,c=cfgOf(S),o=c.pr[k+':'+id];if(!PR0[k]||PR0[k][id]==null)return err('العنصر غير موجود.');if(c.f.shop===0)return err('المتجر مقفول حالياً.');if(o&&o.off)return err('العنصر ده غير متاح حالياً.');if(u.inv.includes(k+':'+id))return err('انت ممتلك العنصر ده بالفعل.');const p=o&&o.p!=null?o.p:PR0[k][id];if(u.pts<p)return err(`محتاج ${p-u.pts} نقطة كمان.`);u.pts-=p;u.spent+=p;u.inv.push(k+':'+id);u.eq[k]=id;return{}},
+eqp:(S,u,d)=>{if(!PR0[d.k])return err('غير صحيح.');if(!d.id)delete u.eq[d.k];else{if(!u.inv.includes(d.k+':'+d.id))return err('انت مش ممتلك العنصر ده.');u.eq[d.k]=d.id}return{}},
+chpw:(S,u,d)=>{if(sha(u.salt+d.o)!=u.hash)return err('كلمة المرور الحالية غلط.');if(!/^[0-9a-f]{64}$/.test(d.n||''))return err('كلمة المرور الجديدة غير صالحة.');u.hash=sha(u.salt+d.n);return{}},
+fReq:(S,u,d)=>{const t=S.get('users',nph(d.to));if(!t)return err('الرقم ده مش مسجل في 99%.');nrm(t);if(t.phone==u.phone)return err('ده رقمك انت.');if(u.friends.includes(t.phone))return err('انتوا أصحاب بالفعل.');if(u.sent.includes(t.phone))return err('بعتّله طلب قبل كده وفي انتظار رده.');if(u.fr.includes(t.phone))return err('هو باعتلك طلب، اقبله من الطلبات.');t.fr.push(u.phone);u.sent.push(t.phone);S.set('users',t.phone,t);return{name:t.name}},
+fAcc:(S,u,d)=>{const p=d.from;if(!u.fr.includes(p))return err('الطلب ده مش موجود.',{sv:1});const o=S.get('users',p);u.fr=u.fr.filter(x=>x!=p);if(!u.friends.includes(p))u.friends.push(p);if(o){nrm(o);o.sent=o.sent.filter(x=>x!=u.phone);if(!o.friends.includes(u.phone))o.friends.push(u.phone);o.notes.push(`${u.name} قبل طلب صداقتك.`);S.set('users',p,o)}return{profs:profs(S,[p])}},
+fDec:(S,u,d)=>{const p=d.from,o=S.get('users',p);u.fr=u.fr.filter(x=>x!=p);if(o){nrm(o);o.sent=o.sent.filter(x=>x!=u.phone);S.set('users',p,o)}return{}},
+chPeek:(S,u,d)=>{const ch=getCh(S,d);if(!ch)return err('الكود غلط.');if(ch.status!='lobby')return err('التحدي ده بدأ أو انتهى.');if(ch.members.length>=6&&!isM(ch,u))return err('التحدي مكتمل.');return{name:ch.name}},
+chNew:(S,u,d)=>{if(cfgOf(S).f.chal===0)return err('التحديات متوقفة حالياً.');const name=String(d.name||'').trim().slice(0,40);if(!name)return err('اكتب اسم التحدي.');let code;do{code=rnd(5).toUpperCase()}while(S.get('chs',code));
+const ch={code,name,owner:u.phone,members:[u.phone],sec:{},run:{},lg:{},out:{},sur:{},status:'lobby',ready:[],ag:[],bt:{},bm:[],msgs:[],pend:[],created:Date.now()};S.set('chs',code,ch);u.chs.push(code);return{ch,code}},
+chJoin:(S,u,d)=>{const ch=getCh(S,d);if(!ch)return err('الكود غلط.');if(ch.status!='lobby')return err('التحدي ده بدأ أو انتهى.');if(!isM(ch,u)){if(ch.members.length>=6)return err('التحدي مكتمل.');ch.members.push(u.phone);ch.ag=ch.ag||[];ch.ag.push(u.phone);ch.cd=null}if(!u.chs.includes(ch.code))u.chs.push(ch.code);S.set('chs',ch.code,ch);return{ch,code:ch.code}},
+chInv:(S,u,d)=>{const ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');if(ch.status!='lobby')return err('التحدي بدأ.');const t=S.get('users',String(d.to||''));if(!t||!u.friends.includes(t.phone))return err('لازم يكون صديقك.');nrm(t);ch.pend=ch.pend||[];if(ch.members.includes(t.phone))return err('هو في التحدي بالفعل.');if(ch.pend.includes(t.phone))return err('بعتّله دعوة قبل كده.');ch.pend.push(t.phone);t.civ.push({code:ch.code,by:u.phone});S.set('users',t.phone,t);S.set('chs',ch.code,ch);return{ch,name:t.name}},
+chAcc:(S,u,d)=>{const ch=getCh(S,d);u.civ=u.civ.filter(x=>x.code!=String(d.code).toUpperCase());if(!ch||ch.status!='lobby')return err('الدعوة انتهت: التحدي بدأ أو اتلغى.',{sv:1});ch.pend=(ch.pend||[]).filter(x=>x!=u.phone);if(!isM(ch,u)){if(ch.members.length>=6)return err('التحدي مكتمل.',{sv:1});ch.members.push(u.phone);ch.ag=ch.ag||[];ch.ag.push(u.phone);ch.cd=null}if(!u.chs.includes(ch.code))u.chs.push(ch.code);S.set('chs',ch.code,ch);return{ch,code:ch.code}},
+chDec:(S,u,d)=>{const code=String(d.code||'').toUpperCase(),ch=S.get('chs',code);u.civ=u.civ.filter(x=>x.code!=code);if(ch){ch.pend=(ch.pend||[]).filter(x=>x!=u.phone);S.set('chs',code,ch)}return{}},
+chSrch:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');if(ch.status!='lobby')return err('التحدي بدأ.');if(ch.members.length>=6)return err('التحدي وصل للحد الأقصى.');const used=ch.members.filter(m=>m[0]=='b').map(m=>m.split('_')[2]),f=NMS.filter(n=>used.indexOf(n)<0),n=f[Math.floor(Math.random()*f.length)],id='b_'+ch.code+'_'+n;ch.members.push(id);ch.bt=ch.bt||{};ch.bt[id]=now;ch.cd=null;S.set('chs',ch.code,ch);return{ch,name:n}},
+chRdy:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');if(ch.status!='lobby')return{ch};ch.ready=ch.ready||[];ch.ag=ch.ag||[];
+if(d.on){if(ch.members.length<2)return err('محتاج مشارك تاني على الأقل.');if(!ch.ag.includes(u.phone)){if(!d.ag)return err('لازم توافق على التعليمات الأول.');ch.ag.push(u.phone)}if(!ch.ready.includes(u.phone)){ch.ready.push(u.phone);addMsg(ch,u.phone,now)}}else{ch.ready=ch.ready.filter(x=>x!=u.phone);ch.cd=null}
+tickPure(ch,now);S.set('chs',ch.code,ch);return{ch}},
+chGet:(S,u,d,now)=>{let ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');const c2=JSON.parse(JSON.stringify(ch));
+if(c2.status!='ended'&&tickPure(c2,now))S.lock(()=>{ch=getCh(S,d);const t=tickPure(ch,now);if(t==2){const uu=nrm(S.get('users',u.phone));endCh(S,ch,now,uu);S.set('users',uu.phone,uu);Object.assign(u,uu)}if(t)S.set('chs',ch.code,ch)});
+return{ch,profs:profs(S,ch.members)}},
+chTog:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');if(ch.out&&ch.out[u.phone])return err('انت خرجت من التحدي.');ch.run=ch.run||{};if(ch.run[u.phone])bank(S,ch,u.phone,now,u);else ch.run[u.phone]=now;S.set('chs',ch.code,ch);return{ch}},
+chStop:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active'||!ch.run||!ch.run[u.phone])return{};const at=Math.min(now,Math.max(ch.run[u.phone],+d.at||now));bank(S,ch,u.phone,at,u);S.set('chs',ch.code,ch);return{ch}},
+chReqEnd:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');if(ch.endReq)return err('فيه طلب إنهاء شغال بالفعل.');ch.endReq={by:u.phone,t:now,ok:[u.phone]};if(chkEnd(ch,now))endCh(S,ch,now,u);S.set('chs',ch.code,ch);return{ch}},
+chApr:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active'||!ch.endReq)return err('مفيش طلب إنهاء.');if(!ch.endReq.ok.includes(u.phone))ch.endReq.ok.push(u.phone);if(chkEnd(ch,now))endCh(S,ch,now,u);S.set('chs',ch.code,ch);return{ch}},
+chRej:(S,u,d)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');ch.endReq=null;S.set('chs',ch.code,ch);return{ch}},
+chSur:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');const id=u.phone;ch.out=ch.out||{};if(ch.out[id])return err('انت خرجت بالفعل.');bank(S,ch,id,now,u);const a=Math.floor(myP(ch,id,now)*.1);ch.sur=ch.sur||{};ch.out[id]=1;ch.sur[id]=a;u.pts+=a;u.notes.push(`استسلمت في تحدي «${ch.name}» وأخدت ${a} نقطة (10% من نقاطك).`);if(live(ch).length<=1)endCh(S,ch,now,u);S.set('chs',ch.code,ch);return{ch,a}}
+};
+const RO={me:1,prof:1,chGet:1,chPeek:1};
+function signup(S,d){const c=cfgOf(S);if(c.f.signup===0)return err('التسجيل متوقف حالياً من الإدارة.');const n=String(d.name||'').trim().slice(0,40),p=nph(d.phone);
+if(n.length<2)return err('الاسم ناقص.');if(!/^01\d{9}$/.test(p))return err('رقم التلفون لازم يبقى 11 رقم ويبدأ بـ 01.');if(!/^[0-9a-f]{64}$/.test(d.hash||''))return err('كلمة المرور غير صالحة.');if(['إعدادي','ثانوي'].indexOf(d.stage)<0)return err('المرحلة غير صحيحة.');
+return S.lock(()=>{if(S.get('users',p))return err('الرقم ده مسجل قبل كده. سجّل دخول.');const salt=rnd(10),t=rnd(32),u=nrm({phone:p,name:n,salt,hash:sha(salt+d.hash),stage:d.stage,grade:String(d.grade||'').slice(0,20),sys:String(d.sys||'').slice(0,20),track:String(d.track||'').slice(0,30),sp:String(d.sp||'').slice(0,40),plan:null,created:Date.now(),seen:Date.now(),toks:[t],banned:0});S.set('users',p,u);return ok({t,u:pub(u),cfg:pubCfg(c)})})}
+function login(S,d){const p=nph(d.phone),now=Date.now();return S.lock(()=>{const u=S.get('users',p);if(!u)return err('مفيش حساب بالرقم ده.');nrm(u);u.fl=(u.fl||[]).filter(t=>now-t<6e5);if(u.fl.length>=8)return err('محاولات كتير غلط. جرّب بعد 10 دقايق.');
+if(sha(u.salt+d.hash)!=u.hash){u.fl.push(now);S.set('users',p,u);return err('كلمة المرور غلط.')}if(u.banned)return err('BANNED',{e:'BANNED',m:u.banMsg||''});u.fl=[];const t=rnd(32);u.toks=(u.toks||[]).slice(-4).concat(t);u.seen=now;S.set('users',p,u);return ok({t,u:pub(u),cfg:pubCfg(cfgOf(S))})})}
+function handle(S,q){try{const a=String(q.a||''),d=q.d||{};
+if(a=='cfg')return ok({cfg:pubCfg(cfgOf(S))});if(a=='signup')return signup(S,d);if(a=='login')return login(S,d);if(a.slice(0,2)=='ad')return admin(S,q);
+const fn=A[a];if(!fn)return err('طلب غير معروف.');
+const run=()=>{const u=S.get('users',String(q.p||''));if(!u||!(u.toks||[]).includes(q.t))return{ok:0,e:'AUTH'};nrm(u);if(u.banned)return{ok:0,e:'BANNED',m:u.banMsg||''};const now=Date.now(),r=fn(S,u,d,now)||{};
+if(r.ok===0){if(r.sv&&!RO[a])S.set('users',u.phone,u);return Object.assign(r,{u:pub(u),now})}if(!RO[a]){u.seen=now;S.set('users',u.phone,u)}return ok(Object.assign({u:pub(u)},r))};
+return RO[a]?run():S.lock(run)}catch(x){return err('خطأ في السيرفر: '+(x&&x.message||x))}}
+const ADRO={adStats:1,adUsers:1,adUser:1,adChs:1,adCfgGet:1};
+function admin(S,q){const d=q.d||{},now=Date.now(),a=q.a;
+if(a=='adLogin'){const pw=S.prop('ADMIN_PASS');if(!pw)return err('لسه ما ضفتش ADMIN_PASS في Script Properties.');if(d.pass!==pw)return err('كلمة سر الأدمن غلط.');return S.lock(()=>{const c=cfgOf(S),tok=rnd(32);c.admToks=c.admToks.filter(x=>x.exp>now).slice(-5).concat({tok,exp:now+432e5});S.set('cfg','main',c);return ok({tok})})}
+if(!cfgOf(S).admToks.some(x=>x.tok==q.t&&x.exp>now))return{ok:0,e:'ADAUTH'};
+const gu=p=>{const u=S.get('users',nph(d.phone));return u?nrm(u):null},NU='الحساب غير موجود.';
+const run=()=>{switch(a){
+case'adStats':{const us=S.all('users'),chs=S.all('chs');return ok({users:us.length,banned:us.filter(u=>u.banned).length,online:us.filter(u=>now-(u.seen||0)<3e5).length,pts:us.reduce((x,u)=>x+(u.pts||0),0),lobby:chs.filter(c=>c.status=='lobby').length,active:chs.filter(c=>c.status=='active').length,ended:chs.filter(c=>c.status=='ended').length})}
+case'adUsers':return ok({users:S.all('users').map(u=>({phone:u.phone,name:u.name,stage:u.stage,grade:u.grade,sys:u.sys,track:u.track,pts:u.pts||0,spent:u.spent||0,lv:lvl((u.pts||0)+(u.spent||0)),streak:u.streak||0,banned:!!u.banned,created:u.created,seen:u.seen||0,fr:(u.friends||[]).length,chs:(u.chs||[]).length}))});
+case'adUser':{const u=gu();if(!u)return err(NU);const o=pub(u);o.log=(u.log||[]).slice(-30);return ok({user:o})}
+case'adBan':{const u=gu();if(!u)return err(NU);u.banned=d.on?1:0;u.banMsg=String(d.msg||'').slice(0,200);S.set('users',u.phone,u);return ok()}
+case'adPts':{const u=gu();if(!u)return err(NU);const old=u.pts;u.pts=Math.max(0,d.set!=null?Math.floor(+d.set):old+Math.floor(+d.delta||0));const df=u.pts-old;if(df)u.notes.push(df>0?`الإدارة أضافت لك ${df} نقطة.`:`الإدارة خصمت منك ${-df} نقطة.`);S.set('users',u.phone,u);return ok({pts:u.pts})}
+case'adReset':{const u=gu();if(!u)return err(NU);if(!/^[0-9a-f]{64}$/.test(d.hash||''))return err('كلمة مرور غير صالحة.');u.hash=sha(u.salt+d.hash);u.toks=[];S.set('users',u.phone,u);return ok()}
+case'adEdit':{const u=gu();if(!u)return err(NU);['name','stage','grade','sys','track','sp'].forEach(k=>{if(d[k]!=null)u[k]=String(d[k]).slice(0,40)});S.set('users',u.phone,u);return ok()}
+case'adGrant':{const u=gu();if(!u)return err(NU);const key=d.k+':'+d.id;if(!PR0[d.k]||PR0[d.k][d.id]==null)return err('عنصر غير موجود.');if(d.on){if(!u.inv.includes(key))u.inv.push(key)}else{u.inv=u.inv.filter(x=>x!=key);if(u.eq[d.k]==d.id)delete u.eq[d.k]}S.set('users',u.phone,u);return ok({inv:u.inv})}
+case'adDel':{const u=gu();if(!u)return err(NU);S.all('users').forEach(x=>{if(x.phone==u.phone)return;let c=0;['friends','fr','sent'].forEach(k=>{if((x[k]||[]).includes(u.phone)){x[k]=x[k].filter(y=>y!=u.phone);c=1}});if(c)S.set('users',x.phone,x)});S.del('users',u.phone);return ok()}
+case'adChs':return ok({chs:S.all('chs').slice(-200).map(c=>({code:c.code,name:c.name,status:c.status,created:c.created,start:c.start,members:c.members.map(m=>m[0]=='b'?{id:m,n:m.split('_')[2],b:1}:{id:m,n:(S.get('users',m)||{}).name||m})}))});
+case'adChEnd':{const ch=S.get('chs',String(d.code||''));if(!ch)return err('التحدي غير موجود.');if(ch.status!='active')return err('التحدي مش شغال.');endCh(S,ch,now,null);S.set('chs',ch.code,ch);return ok()}
+case'adChDel':S.del('chs',String(d.code||''));return ok();
+case'adCfgGet':{const c=cfgOf(S);return ok({cfg:{f:c.f,pr:c.pr,ann:c.ann||null}})}
+case'adCfgSet':{const c=cfgOf(S);if(d.f)c.f=Object.assign(c.f,d.f);if(d.pr)c.pr=d.pr;if(d.ann!==undefined)c.ann=d.ann?{id:now,text:String(d.ann).slice(0,300)}:null;S.set('cfg','main',c);return ok()}
+case'adBroadcast':{const t=String(d.text||'').slice(0,300);if(!t)return err('اكتب الرسالة.');let n=0;S.all('users').forEach(u=>{nrm(u);u.notes.push('رسالة من الإدارة: '+t);if(u.notes.length>40)u.notes.splice(0,u.notes.length-40);S.set('users',u.phone,u);n++});return ok({n})}
+default:return err('طلب أدمن غير معروف.')}};
+return ADRO[a]?run():S.lock(run)}
+return{handle,sha,sd,botPts,lvl,myP,PR0,nph}})();
+
+const $=s=>document.querySelector(s),E=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let API=localStorage.getItem('adm_api')||'',TK=localStorage.getItem('adm_tok')||'',TAB='dash',US=[],CHS=[],SS={},CF={f:{},pr:{},ann:null},QRY='';
+const TABS=[['dash','الرئيسية'],['users','الحسابات'],['chs','التحديات'],['store','المتجر'],['set','الإعدادات']];
+const IT=[['av','صور البروفايل',[['a1','النجمة'],['a2','البرق'],['a3','التاج'],['a4','الكتاب'],['a5','القمر'],['a6','الصاروخ']]],['skin','ثيمات التطبيق',[['ocean','المحيط'],['sunset','الغروب'],['forest','الغابة'],['royal','الملكي']]],['cskin','ثيمات التحدي',[['ice','الجليد'],['toxic','السام'],['gold','الذهبي'],['neon','النيون']]],['btn','شكل الأزرار',[['pill','بيضاوية'],['sharp','حادة'],['glow','متوهجة']]],['nav','شكل التنقل',[['float','شريط عائم'],['mini','شريط مبسّط']]],['ns','شكل الاسم',[['gold','ذهبي'],['fire','ناري'],['neon','نيون'],['rain','قوس قزح']]]];
+const FT=[['signup','السماح بإنشاء حسابات جديدة'],['shop','المتجر'],['chal','التحديات'],['quran','مشغل القرآن']];
+function toast(m,k){const t=$('#toast');t.textContent=m;t.className='on '+(k||'');clearTimeout(toast.t);toast.t=setTimeout(()=>{t.className=''},2800)}
+async function ac(a,d){if(!API)throw new Error('اكتب رابط الـ API الأول.');let r;try{r=await(await fetch(API,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({a,t:TK,d:d||{}})})).json()}catch(e){throw new Error('مفيش اتصال بالسيرفر، أو الرابط غلط.')}
+if(!r.ok){if(r.e=='ADAUTH'){TK='';localStorage.removeItem('adm_tok');closeM();render()}throw new Error(r.e=='ADAUTH'?'انتهت الجلسة، سجّل دخول تاني.':(r.e||'خطأ'))}return r}
+const TRY=async f=>{try{return await f()}catch(e){toast(e.message,'err')}};
+const ago=t=>{if(!t)return'—';const s=(Date.now()-t)/1000;return s<60?'دلوقتي':s<3600?Math.floor(s/60)+' د':s<86400?Math.floor(s/3600)+' س':Math.floor(s/86400)+' يوم'};
+const closeM=()=>$('#md').classList.remove('on');
+function render(){if(!TK)return loginV();shell()}
+function loginV(){$('#app').innerHTML=`<div style="max-width:420px;margin:60px auto 0"><h2 style="text-align:center;font-size:34px;margin-bottom:4px">99<span style="color:var(--gd)">%</span></h2><p class="mu" style="text-align:center;margin-bottom:18px">لوحة الإدارة</p><div class="card"><div class="mu">رابط الـ API (Web App URL)</div><input id="api" dir="ltr" placeholder="https://script.google.com/macros/s/.../exec" value="${E(API)}"><div class="mu">كلمة سر الأدمن</div><input id="pw" type="password" autocomplete="current-password"><button class="btn w2" onclick="doLogin()">دخول</button></div></div>`;const p=$('#pw');p.onkeydown=e=>{if(e.key=='Enter')doLogin()}}
+async function doLogin(){API=$('#api').value.trim();localStorage.setItem('adm_api',API);await TRY(async()=>{const r=await ac('adLogin',{pass:$('#pw').value});TK=r.tok;localStorage.setItem('adm_tok',TK);toast('تم تسجيل الدخول','ok');render()})}
+function out(){TK='';localStorage.removeItem('adm_tok');render()}
+function shell(){$('#app').innerHTML=`<div class="top"><h2>لوحة إدارة 99%</h2><button class="btn s" onclick="out()">خروج</button></div><div class="tabs">${TABS.map(t=>`<button class="${TAB==t[0]?'on':''}" onclick="TAB='${t[0]}';shell()">${t[1]}</button>`).join('')}</div><div id="pg"><p class="mu">بنحمّل...</p></div>`;load()}
+async function load(){await TRY(async()=>{if(!TK)return;
+if(TAB=='dash'){const[s,u]=await Promise.all([ac('adStats'),ac('adUsers')]);SS=s;US=u.users}
+else if(TAB=='users')US=(await ac('adUsers')).users;
+else if(TAB=='chs')CHS=(await ac('adChs')).chs;
+else CF=(await ac('adCfgGet')).cfg;draw()})}
+function draw(){const p=$('#pg');if(!p)return;p.innerHTML=TAB=='dash'?dashH():TAB=='users'?usersH():TAB=='chs'?chsH():TAB=='store'?storeH():setH()}
+const stat=(n,l)=>`<div class="st"><b>${n}</b><span class="mu">${l}</span></div>`;
+const row=u=>`<div class="card u" onclick="openU('${u.phone}')"><div class="a">${E((u.name||'?')[0])}</div><div class="i"><b>${E(u.name)} ${u.banned?'<span class="tag r">محظور</span>':''}</b><span class="mu">${u.phone} · ${E(u.stage||'')} ${E(u.grade||'')} · آخر نشاط ${ago(u.seen)}</span></div><div style="text-align:left"><b>${u.pts}</b><div class="mu">مستوى ${u.lv}</div></div></div>`;
+function dashH(){const r=[...US].sort((a,b)=>(b.created||0)-(a.created||0)).slice(0,8);return`<div class="gr">${stat(SS.users,'إجمالي الحسابات')}${stat(SS.online,'متصل (آخر 5 د)')}${stat(SS.banned,'محظور')}${stat(SS.pts,'إجمالي النقاط')}${stat(SS.lobby+SS.active,'تحديات جارية')}${stat(SS.ended,'تحديات منتهية')}</div><h3>آخر المسجلين</h3>${r.map(row).join('')||'<p class="mu">مفيش حسابات لسه.</p>'}`}
+function usersH(){return`<input id="q" placeholder="ابحث بالاسم أو الرقم..." value="${E(QRY)}" oninput="QRY=this.value;$('#ul').innerHTML=ulH()"><p class="mu" style="margin-bottom:8px">${US.length} حساب</p><div id="ul">${ulH()}</div>`}
+function ulH(){const q=QRY.trim().toLowerCase(),a=US.filter(u=>!q||(u.name||'').toLowerCase().includes(q)||u.phone.includes(q)).sort((a,b)=>(b.seen||0)-(a.seen||0));return a.map(row).join('')||'<p class="mu">مفيش نتائج.</p>'}
+async function openU(p){await TRY(async()=>{const u=(await ac('adUser',{phone:p})).user;$('#mb').innerHTML=userH(u);$('#md').classList.add('on')})}
+function userH(u){const p=u.phone;return`<div class="top"><h2>${E(u.name)}</h2><button class="btn s" onclick="closeM()">إغلاق</button></div><p class="mu" style="margin:6px 0 10px">${p} · ${E(u.stage||'')} ${E(u.grade||'')} ${E(u.sys||'')} ${E(u.track||'')} ${E(u.sp||'')}</p>
+<div class="gr">${stat(u.pts,'النقاط')}${stat(u.spent||0,'نقاط مصروفة')}${stat(u.streak||0,'أيام متتالية')}${stat((u.friends||[]).length,'أصدقاء')}</div>
+<p class="mu">سجل: ${ago(u.created)} · آخر نشاط: ${ago(u.seen)} · الحالة: ${u.banned?'<span class="tag r">محظور</span>':'<span class="tag g">نشط</span>'}</p>
+<div class="sec"><h3>النقاط</h3><input id="pa" type="number" inputmode="numeric" placeholder="العدد"><div class="row"><button class="btn" onclick="pts('${p}',1)">+ إضافة</button><button class="btn d" onclick="pts('${p}',-1)">− خصم</button><button class="btn s" onclick="setp('${p}')">ضبط الرقم</button></div></div>
+<div class="sec"><h3>الحظر</h3><input id="bm" placeholder="رسالة تظهر للمستخدم (اختياري)" value="${E(u.banMsg||'')}"><button class="btn ${u.banned?'':'d'}" onclick="ban('${p}',${u.banned?0:1})">${u.banned?'فك الحظر':'حظر الحساب'}</button></div>
+<div class="sec"><h3>تعديل البيانات</h3><input id="nn" value="${E(u.name)}" placeholder="الاسم"><button class="btn s" onclick="ren('${p}')">حفظ الاسم</button></div>
+<div class="sec"><h3>كلمة المرور</h3><input id="np" type="text" placeholder="كلمة مرور جديدة (6 على الأقل)"><button class="btn s" onclick="rst('${p}')">تغيير كلمة المرور</button></div>
+<div class="sec"><h3>عناصر المتجر (اضغط للمنح أو السحب)</h3>${IT.map(c=>`<div class="mu" style="margin-bottom:4px">${c[1]}</div><div class="chips">${c[2].map(i=>{const on=(u.inv||[]).includes(c[0]+':'+i[0]);return`<button class="chip ${on?'on':''}" onclick="gr('${p}','${c[0]}','${i[0]}',${on?0:1})">${i[1]}</button>`}).join('')}</div>`).join('')}</div>
+<div class="sec"><button class="btn d w2" onclick="del('${p}')">حذف الحساب نهائياً</button></div>`}
+const act=(a,d,m)=>TRY(async()=>{await ac(a,d);toast(m,'ok');if(d.phone&&a!='adDel')await openU(d.phone);else closeM();load()});
+function pts(p,s){const v=Math.floor(+$('#pa').value);if(!v||v<0)return toast('اكتب عدد صحيح موجب.','err');act('adPts',{phone:p,delta:s*v},s>0?'تمت إضافة النقاط':'تم خصم النقاط')}
+function setp(p){const v=$('#pa').value;if(v===''||+v<0)return toast('اكتب الرقم المطلوب.','err');act('adPts',{phone:p,set:Math.floor(+v)},'تم ضبط النقاط')}
+const ban=(p,on)=>act('adBan',{phone:p,on,msg:$('#bm').value},on?'تم حظر الحساب':'تم فك الحظر');
+const ren=p=>{const n=$('#nn').value.trim();if(n.length<2)return toast('الاسم قصير.','err');act('adEdit',{phone:p,name:n},'تم حفظ الاسم')};
+function rst(p){const w=$('#np').value;if(w.length<6)return toast('كلمة المرور 6 على الأقل.','err');act('adReset',{phone:p,hash:CORE.sha('99|'+w)},'تم تغيير كلمة المرور')}
+const gr=(p,k,id,on)=>act('adGrant',{phone:p,k,id,on},on?'تم منح العنصر':'تم سحب العنصر');
+function del(p){if(confirm('متأكد؟ هيتم حذف الحساب نهائياً ومش هيرجع.'))act('adDel',{phone:p},'تم حذف الحساب')}
+function chsH(){const st={lobby:'انتظار',active:'شغال',ended:'منتهي'};return[...CHS].reverse().map(c=>`<div class="card"><div class="top"><b>${E(c.name)}</b><span class="tag ${c.status=='active'?'g':''}">${st[c.status]||c.status}</span></div><p class="mu" style="margin:6px 0">كود: ${c.code} · ${ago(c.created)} · المشاركين: ${c.members.map(m=>E(m.n)).join('، ')}</p><div class="row">${c.status=='active'?`<button class="btn s" onclick="chEnd('${c.code}')">إنهاء إجباري</button>`:''}<button class="btn d" onclick="chDel('${c.code}')">حذف</button></div></div>`).join('')||'<p class="mu">مفيش تحديات.</p>'}
+const chEnd=c=>{if(confirm('إنهاء التحدي دلوقتي وتوزيع النقاط؟'))TRY(async()=>{await ac('adChEnd',{code:c});toast('تم إنهاء التحدي','ok');load()})};
+const chDel=c=>{if(confirm('حذف التحدي نهائياً؟'))TRY(async()=>{await ac('adChDel',{code:c});toast('تم الحذف','ok');load()})};
+function storeH(){return`<p class="mu" style="margin-bottom:10px">اترك السعر فاضي لاستخدام السعر الافتراضي. علّم "إخفاء" لو عايز العنصر يختفي من المتجر.</p>`+IT.map(c=>`<div class="card"><h3>${c[1]}</h3>${c[2].map(i=>{const o=CF.pr[c[0]+':'+i[0]]||{},d=CORE.PR0[c[0]][i[0]];return`<div class="pr"><span>${i[1]}</span><input type="number" inputmode="numeric" id="p_${c[0]}_${i[0]}" placeholder="${d}" value="${o.p!=null?o.p:''}"><label><input type="checkbox" id="h_${c[0]}_${i[0]}" ${o.off?'checked':''}>إخفاء</label></div>`}).join('')}</div>`).join('')+`<button class="btn w2" onclick="saveStore()">حفظ أسعار المتجر</button>`}
+function saveStore(){const pr={};IT.forEach(c=>c[2].forEach(i=>{const v=$('#p_'+c[0]+'_'+i[0]).value,off=$('#h_'+c[0]+'_'+i[0]).checked,o={};if(v!==''&&+v>=0&&+v!=CORE.PR0[c[0]][i[0]])o.p=Math.floor(+v);if(off)o.off=1;if(o.p!=null||o.off)pr[c[0]+':'+i[0]]=o}));TRY(async()=>{await ac('adCfgSet',{pr});toast('تم حفظ المتجر','ok')})}
+function setH(){return`<div class="card"><h3>تشغيل وإيقاف المميزات</h3>${FT.map(f=>`<label class="sw"><span>${f[1]}</span><input type="checkbox" ${CF.f[f[0]]!==0?'checked':''} onchange="ft('${f[0]}',this.checked)"></label>`).join('')}</div>
+<div class="card"><h3>إعلان يظهر على الصفحة الرئيسية للكل</h3><textarea id="an" placeholder="نص الإعلان">${E(CF.ann?CF.ann.text:'')}</textarea><div class="row"><button class="btn" onclick="ann(1)">نشر الإعلان</button><button class="btn s" onclick="ann(0)">إزالة الإعلان</button></div></div>
+<div class="card"><h3>رسالة لكل المستخدمين</h3><p class="mu" style="margin-bottom:8px">بتوصل كإشعار في صفحة التحدي عند كل مستخدم.</p><textarea id="bc" placeholder="نص الرسالة"></textarea><button class="btn w2" onclick="bc()">إرسال للجميع</button></div>`}
+const ft=(k,v)=>TRY(async()=>{await ac('adCfgSet',{f:{[k]:v?1:0}});CF.f[k]=v?1:0;toast(v?'تم التشغيل':'تم الإيقاف','ok')});
+const ann=on=>{const t=$('#an').value.trim();if(on&&!t)return toast('اكتب نص الإعلان.','err');TRY(async()=>{await ac('adCfgSet',{ann:on?t:null});if(!on)$('#an').value='';toast(on?'تم نشر الإعلان':'تمت إزالة الإعلان','ok')})};
+const bc=()=>{const t=$('#bc').value.trim();if(!t)return toast('اكتب الرسالة.','err');if(!confirm('إرسال الرسالة لكل المستخدمين؟'))return;TRY(async()=>{const r=await ac('adBroadcast',{text:t});$('#bc').value='';toast('اتبعتت لـ '+r.n+' مستخدم','ok')})};
+setInterval(()=>{if(TK&&!document.hidden&&!$('#md').classList.contains('on')&&['dash','users','chs'].includes(TAB)&&!(document.activeElement&&document.activeElement.tagName=='INPUT'))load()},15000);
+render();
+</script>
+</body>
+</html>
