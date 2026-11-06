@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>99% – رفيق المذاكرة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F4F2FB;--sf:#fff;--sf2:#ECE9F8;--ink:#1B1740;--mu:#6B6894;--ac:#5B3DF5;--acT:#fff;--gd:#F5A524;--bd:#DDD8F2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#120F29;--sf:#1C1840;--sf2:#262150;--ink:#F1EEFF;--mu:#9C98C8;--ac:#8B74FF;--acT:#120F29;--gd:#FFC25A;--bd:#2F2A5E}}
+:root[data-theme="dark"]{--bg:#120F29;--sf:#1C1840;--sf2:#262150;--ink:#F1EEFF;--mu:#9C98C8;--ac:#8B74FF;--acT:#120F29;--gd:#FFC25A;--bd:#2F2A5E}
+:root[data-mode="fire"]:not(.z){--bg:#150604;--sf:#26100B;--sf2:#37170F;--ink:#FFF1EA;--mu:#D9A395;--ac:#FF4A1C;--acT:#fff;--gd:#FFB020;--bd:#4B2016}
+:root[data-mode="fire"] body{background:radial-gradient(120% 50% at 50% -8%,#6b1608,var(--bg) 62%) no-repeat var(--bg)}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{font-family:Cairo,Tahoma,sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;padding-bottom:96px}
+.w{max-width:520px;margin:0 auto;padding:16px}
+h2{font-size:20px;font-weight:800;margin:6px 0 12px}h3{font-size:16px;font-weight:800;margin-bottom:8px}
+.card{background:var(--sf);border:1px solid var(--bd);border-radius:18px;padding:16px;margin-bottom:12px}
+.mu{color:var(--mu);font-size:13px}.lab{font-size:13px;font-weight:600;color:var(--mu);margin:0 2px 4px}
+input,select{width:100%;font:inherit;padding:12px 14px;border-radius:12px;border:1.5px solid var(--bd);background:var(--bg);color:var(--ink);margin-bottom:10px}
+input:focus,select:focus,button:focus-visible{outline:3px solid var(--ac);outline-offset:1px}
+.btn{font:inherit;font-weight:800;border:0;border-radius:14px;padding:13px 18px;background:var(--ac);color:var(--acT);width:100%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .15s}
+.btn.s{background:var(--sf2);color:var(--ink)}.btn.g{background:var(--gd);color:#2a1c00}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.row{display:flex;gap:10px}.row>*{flex:1}.mb{margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+.chip{font:inherit;font-weight:600;padding:8px 14px;border-radius:999px;border:1.5px solid var(--bd);background:var(--sf);color:var(--ink);cursor:pointer}
+.chip.on{background:var(--ac);color:var(--acT);border-color:var(--ac)}
+.logo{font-weight:900;font-size:72px;line-height:1;letter-spacing:-3px;color:var(--ac);direction:ltr;text-align:center}.logo b{color:var(--gd)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.stat{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:12px;text-align:center}.stat b{display:block;font-size:22px;font-weight:900}
+.hero{background:var(--ac);color:var(--acT);border-radius:22px;padding:20px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.hero .n{font-size:48px;font-weight:900;line-height:1}
+.bar{height:8px;border-radius:9px;background:rgba(255,255,255,.3);margin-top:10px;overflow:hidden}.bar i{display:block;height:100%;background:var(--gd)}
+.tabs{display:flex;background:var(--sf2);border-radius:14px;padding:4px;margin-bottom:14px}
+.tabs button{flex:1;font:inherit;font-weight:800;border:0;background:none;color:var(--mu);padding:10px;border-radius:11px;cursor:pointer}.tabs button.on{background:var(--sf);color:var(--ink)}
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--sf);border-top:1px solid var(--bd);display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));z-index:5}
+nav button{flex:1;font:inherit;font-size:12px;font-weight:600;border:0;background:none;color:var(--mu);padding:6px 0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px}nav button.on{color:var(--ac)}
+.ring{display:block;margin:6px auto;width:240px;height:240px}.ring text{font-family:Cairo;font-weight:900;fill:var(--ink)}
+.task{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}.task:last-child{border:0}.task.d .t{text-decoration:line-through;opacity:.5}
+.task .t{flex:1}.task button.x{background:none;border:0;color:var(--mu);cursor:pointer;display:grid}
+.ck{width:26px;height:26px;border-radius:8px;border:2px solid var(--ac);background:none;color:var(--acT);cursor:pointer;font-weight:900}.d .ck{background:var(--ac)}
+.pr{font-size:11px;font-weight:800;padding:2px 8px;border-radius:9px;background:var(--sf2)}
+.day{border-right:4px solid var(--ac)}.day.off{border-color:var(--gd);opacity:.8}
+.blk{display:flex;gap:10px;padding:6px 0;font-size:14px}.blk b{min-width:64px;color:var(--ac)}
+.lb{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd)}.lb:last-child{border:0}
+.rk{width:30px;height:30px;border-radius:50%;background:var(--sf2);display:grid;place-items:center;font-weight:900}.lb.f .rk{background:var(--gd);color:#2a1c00}
+.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.av{width:44px;height:44px;border-radius:50%;background:var(--gd);color:#2a1c00;font-weight:900;font-size:20px;border:0;cursor:pointer;font-family:inherit}
+.ch{display:flex;gap:8px;height:170px}.cb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bw{flex:1;width:100%;display:flex;align-items:flex-end}.bw i{width:100%;border-radius:8px 8px 4px 4px;background:var(--sf2)}.bw i.t{background:var(--ac)}.cb small{font-size:11px;color:var(--mu)}.cb span{font-size:11px;font-weight:800;min-height:16px}
+.fh{display:flex;align-items:center;gap:10px;margin-bottom:14px}.fl{font-weight:900;font-size:22px;display:flex;gap:6px;align-items:center;color:var(--ac)}
+.ib{width:42px;height:42px;border-radius:12px;border:1px solid var(--bd);background:var(--sf);color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none}
+.cc{cursor:pointer;display:flex;align-items:center;gap:12px}.cc .ico{width:44px;height:44px;border-radius:14px;background:var(--sf2);color:var(--ac);display:grid;place-items:center;flex:none}
+.big{font-size:54px;font-weight:900;direction:ltr;text-align:center;letter-spacing:1px;background:linear-gradient(var(--gd),var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.2}
+.win{text-align:center;padding:8px 0}.win .ico{width:72px;height:72px;border-radius:50%;background:var(--gd);color:#2a1c00;display:grid;place-items:center;margin:0 auto 10px}
+.note{border-right:4px solid var(--gd);display:flex;gap:10px;align-items:center}.note p{flex:1;font-size:14px}
+#toast{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:12px;font-weight:600;z-index:20;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90%;text-align:center}#toast.on{opacity:1}
+#md{position:fixed;inset:0;background:rgba(10,8,30,.6);display:none;align-items:flex-end;z-index:15}#md.on{display:flex}
+#md>div{background:var(--sf);width:100%;max-width:520px;margin:0 auto;border-radius:24px 24px 0 0;padding:22px 20px calc(20px + env(safe-area-inset-bottom,0px));max-height:90vh;overflow:auto}
+.mh{width:52px;height:52px;border-radius:50%;background:var(--sf2);color:var(--ac);display:grid;place-items:center;margin-bottom:10px}
+.er{color:#E5484D;font-size:13px;min-height:18px;margin:-4px 0 6px}
+.rl{padding-inline-start:20px;line-height:1.9;font-size:14px;margin-bottom:14px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.sg{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.sg button{flex:1;min-width:30%;font:inherit;font-weight:700;padding:11px 10px;border-radius:12px;border:1.5px solid var(--bd);background:var(--bg);color:var(--ink);cursor:pointer}
+.sg button.on{background:var(--ac);color:var(--acT);border-color:var(--ac)}
+.sg.two button{min-width:45%}
+.ag{display:flex;gap:10px;align-items:center;margin-bottom:14px;font-size:14px;font-weight:600}.ag input{width:22px;height:22px;margin:0;flex:none}
+#toast{left:12px;right:12px;margin:0 auto;transform:translateY(-16px);max-width:440px;background:var(--sf);color:var(--ink);border:1px solid var(--bd);border-right:5px solid var(--tc,var(--ac));border-radius:16px;padding:12px 14px;display:flex;gap:12px;align-items:center;text-align:right;box-shadow:0 10px 30px rgba(0,0,0,.25);transition:opacity .25s,transform .25s}
+#toast.on{transform:translateY(0)}
+#toast .ti{width:38px;height:38px;border-radius:12px;background:var(--tc,var(--ac));color:#fff;display:grid;place-items:center;flex:none}
+#toast b{display:block;font-size:14px}#toast span{font-size:13px;color:var(--mu)}
+:root[data-skin="ocean"]{--ac:#0E8FA8;--gd:#FF8A3D;--acT:#fff}
+:root[data-skin="sunset"]{--ac:#E5446D;--gd:#FF9F1C;--acT:#fff}
+:root[data-skin="forest"]{--ac:#1F9D55;--gd:#F2C94C;--acT:#fff}
+:root[data-skin="royal"]{--ac:#7B3FE4;--gd:#E8B923;--acT:#fff}
+:root[data-mode="fire"] body{background:radial-gradient(120% 50% at 50% -8%,var(--glow,#6b1608),var(--bg) 62%) no-repeat var(--bg)}
+:root[data-mode="fire"][data-cskin="ice"]:not(.z){--bg:#04101A;--sf:#0B2233;--sf2:#12324A;--ink:#E8F6FF;--mu:#8FB6CF;--ac:#19A7FF;--acT:#fff;--gd:#7FE3FF;--bd:#1B4560;--glow:#0B4A73}
+:root[data-mode="fire"][data-cskin="toxic"]:not(.z){--bg:#060F06;--sf:#0F1F0F;--sf2:#172E17;--ink:#EFFFEA;--mu:#9BC49A;--ac:#35D44F;--acT:#03140a;--gd:#D4FF3A;--bd:#214A21;--glow:#0F5A1B}
+:root[data-mode="fire"][data-cskin="gold"]:not(.z){--bg:#130E02;--sf:#231A05;--sf2:#33260A;--ink:#FFF6DD;--mu:#CDB26A;--ac:#F2B01E;--acT:#2a1c00;--gd:#FFE08A;--bd:#4A3A0E;--glow:#6B4A00}
+:root[data-mode="fire"][data-cskin="neon"]:not(.z){--bg:#0F0618;--sf:#1D0C2E;--sf2:#2B1344;--ink:#FBEFFF;--mu:#BE9AD9;--ac:#D946EF;--acT:#fff;--gd:#22D3EE;--bd:#44205F;--glow:#5B1383}
+:root[data-btn="pill"] .btn,:root[data-btn="pill"] .chip{border-radius:999px}
+:root[data-btn="sharp"] .btn,:root[data-btn="sharp"] .chip,:root[data-btn="sharp"] .sg button{border-radius:5px}
+:root[data-btn="glow"] .btn:not(.s){box-shadow:0 0 18px color-mix(in srgb,var(--ac) 60%,transparent)}
+:root[data-nav="float"] nav{left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));border:1px solid var(--bd);border-radius:22px;padding-bottom:6px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+:root[data-nav="mini"] nav button:not(.on){font-size:0}
+:root[data-nav="mini"] nav button.on{background:var(--sf2);border-radius:14px}
+.n-gold{background:linear-gradient(90deg,#F5C84B,#FFF2B0,#E0A020);-webkit-background-clip:text;background-clip:text;color:transparent}
+.n-fire{background:linear-gradient(90deg,#FF4A1C,#FFB020);-webkit-background-clip:text;background-clip:text;color:transparent}
+.n-neon{color:#7CF7FF;text-shadow:0 0 8px #22D3EE,0 0 18px #22D3EE}
+.n-rain{background:linear-gradient(90deg,#FF5F6D,#FFC371,#47E1A8,#5B8DEF,#B46CFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.avc{border-radius:50%;display:inline-grid;place-items:center;color:#fff;flex:none}.avb{border:0;background:none;padding:0;cursor:pointer}
+.gr{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.it{background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:12px;text-align:center}.it .pv{height:64px;display:grid;place-items:center;margin-bottom:8px}.it .btn{padding:10px;font-size:14px}
+.sp{width:24px;height:24px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:spin 1s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.sp{animation:none}#toast{transition:none}}
+#mp{position:fixed;left:12px;right:12px;bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:6;max-width:496px;margin:0 auto;display:none;align-items:center;gap:8px;background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:8px 12px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+#mp.on{display:flex}:root[data-mode="fire"] #mp{bottom:calc(14px + env(safe-area-inset-bottom,0px))}:root[data-nav="float"] #mp{bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+#mp .mi{flex:1;min-width:0;font-size:13px}#mp .mi b{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mbn{width:38px;height:38px;border-radius:50%;border:0;background:var(--ac);color:var(--acT);display:grid;place-items:center;cursor:pointer;flex:none}.mbn.s{background:var(--sf2);color:var(--ink)}
+body.mpon{padding-bottom:164px}
+.wh{display:flex;align-items:center;gap:10px;flex:1;min-width:0}.wn{min-width:0;line-height:1.35}.wn>div{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lvb{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:800;padding:1px 8px;border-radius:999px;background:var(--gd);color:#2a1c00}
+</style>
+</head>
+<body>
+<div id="app" class="w"></div>
+<div id="toast"></div>
+<div id="mp"></div>
+<div id="md"><div id="mb"></div></div>
+<script>
+const $=s=>document.querySelector(s);
+const E=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const P={home:'<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/>',timer:'<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',tasks:'<rect x="3" y="4" width="18" height="17" rx="3"/><path d="M8 12l3 3 5-6"/>',plan:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',fire:'<path d="M12 3c1 4 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-9z"/>',trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0V4z"/><path d="M7 6H4v2a3 3 0 003 3M17 6h3v2a3 3 0 01-3 3"/>',back:'<path d="M9 6l6 6-6 6"/>',plus:'<path d="M12 5v14M5 12h14"/>',x:'<path d="M6 6l12 12M18 6L6 18"/>',bot:'<rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4M9 14h.01M15 14h.01"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2 20c0-3.5 3-5.5 7-5.5s7 2 7 5.5M16 4.5a3.5 3.5 0 010 7M18 14.8c2.3.5 4 2 4 5.2"/>',key:'<circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16 7l3 3"/>',flag:'<path d="M5 21V4M5 4h12l-2 4 2 4H5"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>'};
+const I=(n,s=24)=>`<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${P[n]}</svg>`;
+const CORE=(function(){
+const TZ=2,PR0={av:{a1:300,a2:400,a3:900,a4:500,a5:700,a6:1000},skin:{ocean:800,sunset:1000,forest:1200,royal:1800},cskin:{ice:1200,toxic:1500,gold:2200,neon:2600},btn:{pill:600,sharp:600,glow:1500},nav:{float:900,mini:700},ns:{gold:700,fire:1000,neon:1400,rain:2000}};
+const NMS=['أحمد المنصوري','مريم خالد','يوسف عادل','نور هشام','سلمى طارق','عمر حسام','هدى سمير','كريم ناصر','آية محمود','مصطفى رضا','ليلى أشرف','زياد وائل'];
+const nph=p=>String(p==null?'':p).replace(/[٠-٩]/g,c=>'٠١٢٣٤٥٦٧٨٩'.indexOf(c)).replace(/[\s-]/g,'');
+const err=(e,x)=>Object.assign({ok:0,e},x||{}),ok=x=>Object.assign({ok:1,now:Date.now()},x||{});
+const CH='abcdefghjkmnpqrstuvwxyz23456789',rnd=n=>{let s='';for(let i=0;i<n;i++)s+=CH[Math.floor(Math.random()*CH.length)];return s};
+function sha(s){const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+const u8=unescape(encodeURIComponent(s)),n=u8.length,m=new Array(((n+8>>6)+1)*16).fill(0);
+for(let i=0;i<n;i++)m[i>>2]|=u8.charCodeAt(i)<<(24-(i%4)*8);m[n>>2]|=0x80<<(24-(n%4)*8);m[m.length-1]=n*8;
+let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const R=(x,k)=>(x>>>k)|(x<<(32-k));
+for(let i=0;i<m.length;i+=16){const w=m.slice(i,i+16);for(let t=16;t<64;t++){const x=w[t-15],y=w[t-2];w[t]=(w[t-16]+(R(x,7)^R(x,18)^(x>>>3))+w[t-7]+(R(y,17)^R(y,19)^(y>>>10)))|0}
+let[a,b,c,d,e,f,g,h]=H;for(let t=0;t<64;t++){const t1=(h+(R(e,6)^R(e,11)^R(e,25))+((e&f)^(~e&g))+K[t]+w[t])|0,t2=((R(a,2)^R(a,13)^R(a,22))+((a&b)^(a&c)^(b&c)))|0;h=g;g=f;f=e;e=(d+t1)|0;d=c;c=b;b=a;a=(t1+t2)|0}
+H=[H[0]+a|0,H[1]+b|0,H[2]+c|0,H[3]+d|0,H[4]+e|0,H[5]+f|0,H[6]+g|0,H[7]+h|0]}
+return H.map(x=>(x>>>0).toString(16).padStart(8,'0')).join('')}
+function sd(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return()=>{h^=h<<13;h^=h>>>17;h^=h<<5;return((h>>>0)%1000)/1000}}
+const lvl=p=>Math.floor(Math.sqrt(p/20))+1,dayS=t=>new Date(t+TZ*36e5).toISOString().slice(0,10);
+function botPts(ch,id,now){const r=sd(ch.code+id),end=ch.end||now,W=18e5,b=Math.floor((end-ch.start)/W),lv=.4+r()*.5;let t=0;
+for(let i=0;i<=b;i++){const x=r(),f=i<b?1:((end-ch.start)%W)/W,hr=(new Date(ch.start+i*W).getUTCHours()+TZ)%24;if(hr>=7)t+=Math.round(Math.min(30,30*lv*(.6+x*.8))*f)}return t}
+const myP=(ch,id,now)=>Math.floor((((ch.sec&&ch.sec[id])||0)+(ch.run&&ch.run[id]?(now-ch.run[id])/1000:0))/60);
+const live=ch=>ch.members.filter(m=>!(ch.out&&ch.out[m]));
+const rdyOf=(ch,id,now)=>id[0]=='b'?now-((ch.bt&&ch.bt[id])||0)>6000+sd(id)()*26000:(ch.ready||[]).includes(id);
+const allRdy=(ch,now)=>ch.members.length>=2&&ch.members.every(id=>rdyOf(ch,id,now));
+const eok=(q,m,now)=>m[0]=='b'?now-q.t>8000+sd(m+q.t)()*30000:q.ok.includes(m);
+const chkEnd=(ch,now)=>!!ch.endReq&&live(ch).every(m=>eok(ch.endReq,m,now));
+function addMsg(ch,id,now){ch.msgs=(ch.msgs||[]).filter(m=>now-m.t<60000);ch.msgs.push({by:id,t:now})}
+function touch(x,m,now){x.log=x.log||[];const d=dayS(now);x.log.push({d,m});if(x.log.length>400)x.log.splice(0,x.log.length-400);if(x.last!=d){x.streak=x.last==dayS(now-864e5)?(x.streak||0)+1:1;x.last=d}}
+const nrm=u=>{['friends','fr','sent','civ','notes','inv','chs','tasks','log'].forEach(k=>u[k]=u[k]||[]);u.eq=u.eq||{};u.pts=u.pts||0;u.spent=u.spent||0;u.streak=u.streak||0;return u};
+const pub=u=>{const c=Object.assign({},u);delete c.hash;delete c.toks;delete c.salt;delete c.fl;return c};
+const cfgOf=S=>{const c=S.get('cfg','main')||{};c.f=Object.assign({signup:1,shop:1,chal:1,quran:1},c.f||{});c.pr=c.pr||{};c.admToks=c.admToks||[];return c};
+const pubCfg=c=>({f:c.f,pr:c.pr,ann:c.ann||null});
+function profs(S,ids){const o={};[...new Set(ids)].slice(0,60).forEach(id=>{if(!id||id[0]=='b')return;const u=S.get('users',id);if(u)o[id]={name:u.name,eq:u.eq||{},lv:lvl((u.pts||0)+(u.spent||0))}});return o}
+function bank(S,ch,id,now,u){ch.sec=ch.sec||{};ch.lg=ch.lg||{};if(!ch.run||!ch.run[id])return;const s=(ch.sec[id]||0)+Math.max(0,Math.floor((now-ch.run[id])/1000));ch.sec[id]=s;ch.run[id]=0;
+const m=Math.floor(s/60)-(ch.lg[id]||0);if(m>0&&id[0]!='b'){ch.lg[id]=Math.floor(s/60);const mine=u&&u.phone==id,x=mine?u:S.get('users',id);if(x){nrm(x);touch(x,m,now);if(!mine)S.set('users',id,x)}}}
+function scores(S,ch,now){const nmOf=id=>id[0]=='b'?id.split('_')[2]:((S.get('users',id)||{}).name||id);return ch.members.map(id=>({id,n:nmOf(id),o:!!(ch.out&&ch.out[id]),p:id[0]=='b'?botPts(ch,id,now):myP(ch,id,now)})).sort((a,b)=>b.p-a.p)}
+function endCh(S,ch,now,u){ch.members.forEach(id=>{if(id[0]!='b')bank(S,ch,id,now,u)});ch.end=now;ch.status='ended';ch.endReq=null;
+const s=scores(S,ch,now).filter(x=>!x.o),top=s[0],tie=s.length>1&&s[1].p==top.p,aw={};
+if(top.p>0)s.forEach(x=>{aw[x.id]=tie?x.p:x.id==top.id?top.p:Math.floor(top.p/4)});
+ch.res={win:tie?null:top.id,wn:top.n,prize:top.p,aw:Object.assign({},aw,ch.sur||{}),tie};
+Object.keys(aw).forEach(id=>{if(id[0]=='b')return;const mine=u&&u.phone==id,w=mine?u:S.get('users',id);if(!w)return;nrm(w);w.pts+=aw[id];w.notes.push(tie?`تعادل في تحدي «${ch.name}». أخدت ${aw[id]} نقطة.`:id==top.id?`مبروك يا ${w.name}! فزت في تحدي «${ch.name}» وأخدت ${aw[id]} نقطة في حسابك.`:`انتهى تحدي «${ch.name}» والفايز ${top.n}. أخدت ${aw[id]} نقطة.`);if(!mine)S.set('users',id,w)});return ch}
+function tickPure(ch,now){let r=0;
+if(ch.status=='lobby'){ch.bm=ch.bm||[];ch.members.forEach(id=>{if(id[0]=='b'&&rdyOf(ch,id,now)&&!ch.bm.includes(id)){ch.bm.push(id);addMsg(ch,id,now);r=1}});
+if(allRdy(ch,now)){if(!ch.cd){ch.cd=now;r=1}else if(now-ch.cd>=5000){ch.status='active';ch.start=now;ch.cd=null;r=1}}else if(ch.cd){ch.cd=null;r=1}}
+else if(ch.status=='active'&&chkEnd(ch,now))r=2;return r}
+const getCh=(S,d)=>S.get('chs',String(d.code||'').toUpperCase());
+const isM=(ch,u)=>ch&&ch.members.includes(u.phone);
+const A={
+me:(S,u,d,now)=>{const chl=[],runs=[];u.chs.slice(-15).forEach(c=>{const ch=S.get('chs',c);if(!ch)return;chl.push({code:ch.code,name:ch.name,status:ch.status,members:ch.members});if(ch.status=='active'&&ch.run&&ch.run[u.phone])runs.push(c)});
+if(now-(u.seen||0)>3e5)S.lock(()=>{const x=S.get('users',u.phone);if(x){x.seen=now;S.set('users',x.phone,x)}});
+return{cfg:pubCfg(cfgOf(S)),chl,runs,profs:profs(S,[...u.friends,...u.fr,...u.sent,...u.civ.map(v=>v.by)])}},
+prof:(S,u,d)=>({profs:profs(S,d.ids||[])}),
+push:(S,u,d)=>{if(Array.isArray(d.tasks))u.tasks=d.tasks.slice(0,200);if(d.plan!==undefined)u.plan=d.plan;return{}},
+noteDel:(S,u,d)=>{u.notes.splice(+d.i,1);return{}},
+study:(S,u,d,now)=>{const m=Math.floor(+d.m);if(!(m>=1&&m<=480))return err('المدة غير صحيحة.');const t=u.log.filter(l=>l.d==dayS(now)).reduce((a,l)=>a+l.m,0);if(t+m>1000)return err('وصلت للحد الأقصى للمذاكرة اليوم.');touch(u,m,now);u.pts+=m;return{}},
+buy:(S,u,d)=>{const k=d.k,id=d.id,c=cfgOf(S),o=c.pr[k+':'+id];if(!PR0[k]||PR0[k][id]==null)return err('العنصر غير موجود.');if(c.f.shop===0)return err('المتجر مقفول حالياً.');if(o&&o.off)return err('العنصر ده غير متاح حالياً.');if(u.inv.includes(k+':'+id))return err('انت ممتلك العنصر ده بالفعل.');const p=o&&o.p!=null?o.p:PR0[k][id];if(u.pts<p)return err(`محتاج ${p-u.pts} نقطة كمان.`);u.pts-=p;u.spent+=p;u.inv.push(k+':'+id);u.eq[k]=id;return{}},
+eqp:(S,u,d)=>{if(!PR0[d.k])return err('غير صحيح.');if(!d.id)delete u.eq[d.k];else{if(!u.inv.includes(d.k+':'+d.id))return err('انت مش ممتلك العنصر ده.');u.eq[d.k]=d.id}return{}},
+chpw:(S,u,d)=>{if(sha(u.salt+d.o)!=u.hash)return err('كلمة المرور الحالية غلط.');if(!/^[0-9a-f]{64}$/.test(d.n||''))return err('كلمة المرور الجديدة غير صالحة.');u.hash=sha(u.salt+d.n);return{}},
+fReq:(S,u,d)=>{const t=S.get('users',nph(d.to));if(!t)return err('الرقم ده مش مسجل في 99%.');nrm(t);if(t.phone==u.phone)return err('ده رقمك انت.');if(u.friends.includes(t.phone))return err('انتوا أصحاب بالفعل.');if(u.sent.includes(t.phone))return err('بعتّله طلب قبل كده وفي انتظار رده.');if(u.fr.includes(t.phone))return err('هو باعتلك طلب، اقبله من الطلبات.');t.fr.push(u.phone);u.sent.push(t.phone);S.set('users',t.phone,t);return{name:t.name}},
+fAcc:(S,u,d)=>{const p=d.from;if(!u.fr.includes(p))return err('الطلب ده مش موجود.',{sv:1});const o=S.get('users',p);u.fr=u.fr.filter(x=>x!=p);if(!u.friends.includes(p))u.friends.push(p);if(o){nrm(o);o.sent=o.sent.filter(x=>x!=u.phone);if(!o.friends.includes(u.phone))o.friends.push(u.phone);o.notes.push(`${u.name} قبل طلب صداقتك.`);S.set('users',p,o)}return{profs:profs(S,[p])}},
+fDec:(S,u,d)=>{const p=d.from,o=S.get('users',p);u.fr=u.fr.filter(x=>x!=p);if(o){nrm(o);o.sent=o.sent.filter(x=>x!=u.phone);S.set('users',p,o)}return{}},
+chPeek:(S,u,d)=>{const ch=getCh(S,d);if(!ch)return err('الكود غلط.');if(ch.status!='lobby')return err('التحدي ده بدأ أو انتهى.');if(ch.members.length>=6&&!isM(ch,u))return err('التحدي مكتمل.');return{name:ch.name}},
+chNew:(S,u,d)=>{if(cfgOf(S).f.chal===0)return err('التحديات متوقفة حالياً.');const name=String(d.name||'').trim().slice(0,40);if(!name)return err('اكتب اسم التحدي.');let code;do{code=rnd(5).toUpperCase()}while(S.get('chs',code));
+const ch={code,name,owner:u.phone,members:[u.phone],sec:{},run:{},lg:{},out:{},sur:{},status:'lobby',ready:[],ag:[],bt:{},bm:[],msgs:[],pend:[],created:Date.now()};S.set('chs',code,ch);u.chs.push(code);return{ch,code}},
+chJoin:(S,u,d)=>{const ch=getCh(S,d);if(!ch)return err('الكود غلط.');if(ch.status!='lobby')return err('التحدي ده بدأ أو انتهى.');if(!isM(ch,u)){if(ch.members.length>=6)return err('التحدي مكتمل.');ch.members.push(u.phone);ch.ag=ch.ag||[];ch.ag.push(u.phone);ch.cd=null}if(!u.chs.includes(ch.code))u.chs.push(ch.code);S.set('chs',ch.code,ch);return{ch,code:ch.code}},
+chInv:(S,u,d)=>{const ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');if(ch.status!='lobby')return err('التحدي بدأ.');const t=S.get('users',String(d.to||''));if(!t||!u.friends.includes(t.phone))return err('لازم يكون صديقك.');nrm(t);ch.pend=ch.pend||[];if(ch.members.includes(t.phone))return err('هو في التحدي بالفعل.');if(ch.pend.includes(t.phone))return err('بعتّله دعوة قبل كده.');ch.pend.push(t.phone);t.civ.push({code:ch.code,by:u.phone});S.set('users',t.phone,t);S.set('chs',ch.code,ch);return{ch,name:t.name}},
+chAcc:(S,u,d)=>{const ch=getCh(S,d);u.civ=u.civ.filter(x=>x.code!=String(d.code).toUpperCase());if(!ch||ch.status!='lobby')return err('الدعوة انتهت: التحدي بدأ أو اتلغى.',{sv:1});ch.pend=(ch.pend||[]).filter(x=>x!=u.phone);if(!isM(ch,u)){if(ch.members.length>=6)return err('التحدي مكتمل.',{sv:1});ch.members.push(u.phone);ch.ag=ch.ag||[];ch.ag.push(u.phone);ch.cd=null}if(!u.chs.includes(ch.code))u.chs.push(ch.code);S.set('chs',ch.code,ch);return{ch,code:ch.code}},
+chDec:(S,u,d)=>{const code=String(d.code||'').toUpperCase(),ch=S.get('chs',code);u.civ=u.civ.filter(x=>x.code!=code);if(ch){ch.pend=(ch.pend||[]).filter(x=>x!=u.phone);S.set('chs',code,ch)}return{}},
+chSrch:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');if(ch.status!='lobby')return err('التحدي بدأ.');if(ch.members.length>=6)return err('التحدي وصل للحد الأقصى.');const used=ch.members.filter(m=>m[0]=='b').map(m=>m.split('_')[2]),f=NMS.filter(n=>used.indexOf(n)<0),n=f[Math.floor(Math.random()*f.length)],id='b_'+ch.code+'_'+n;ch.members.push(id);ch.bt=ch.bt||{};ch.bt[id]=now;ch.cd=null;S.set('chs',ch.code,ch);return{ch,name:n}},
+chRdy:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');if(ch.status!='lobby')return{ch};ch.ready=ch.ready||[];ch.ag=ch.ag||[];
+if(d.on){if(ch.members.length<2)return err('محتاج مشارك تاني على الأقل.');if(!ch.ag.includes(u.phone)){if(!d.ag)return err('لازم توافق على التعليمات الأول.');ch.ag.push(u.phone)}if(!ch.ready.includes(u.phone)){ch.ready.push(u.phone);addMsg(ch,u.phone,now)}}else{ch.ready=ch.ready.filter(x=>x!=u.phone);ch.cd=null}
+tickPure(ch,now);S.set('chs',ch.code,ch);return{ch}},
+chGet:(S,u,d,now)=>{let ch=getCh(S,d);if(!isM(ch,u))return err('التحدي مش موجود.');const c2=JSON.parse(JSON.stringify(ch));
+if(c2.status!='ended'&&tickPure(c2,now))S.lock(()=>{ch=getCh(S,d);const t=tickPure(ch,now);if(t==2){const uu=nrm(S.get('users',u.phone));endCh(S,ch,now,uu);S.set('users',uu.phone,uu);Object.assign(u,uu)}if(t)S.set('chs',ch.code,ch)});
+return{ch,profs:profs(S,ch.members)}},
+chTog:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');if(ch.out&&ch.out[u.phone])return err('انت خرجت من التحدي.');ch.run=ch.run||{};if(ch.run[u.phone])bank(S,ch,u.phone,now,u);else ch.run[u.phone]=now;S.set('chs',ch.code,ch);return{ch}},
+chStop:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active'||!ch.run||!ch.run[u.phone])return{};const at=Math.min(now,Math.max(ch.run[u.phone],+d.at||now));bank(S,ch,u.phone,at,u);S.set('chs',ch.code,ch);return{ch}},
+chReqEnd:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');if(ch.endReq)return err('فيه طلب إنهاء شغال بالفعل.');ch.endReq={by:u.phone,t:now,ok:[u.phone]};if(chkEnd(ch,now))endCh(S,ch,now,u);S.set('chs',ch.code,ch);return{ch}},
+chApr:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active'||!ch.endReq)return err('مفيش طلب إنهاء.');if(!ch.endReq.ok.includes(u.phone))ch.endReq.ok.push(u.phone);if(chkEnd(ch,now))endCh(S,ch,now,u);S.set('chs',ch.code,ch);return{ch}},
+chRej:(S,u,d)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');ch.endReq=null;S.set('chs',ch.code,ch);return{ch}},
+chSur:(S,u,d,now)=>{const ch=getCh(S,d);if(!isM(ch,u)||ch.status!='active')return err('التحدي مش شغال.');const id=u.phone;ch.out=ch.out||{};if(ch.out[id])return err('انت خرجت بالفعل.');bank(S,ch,id,now,u);const a=Math.floor(myP(ch,id,now)*.1);ch.sur=ch.sur||{};ch.out[id]=1;ch.sur[id]=a;u.pts+=a;u.notes.push(`استسلمت في تحدي «${ch.name}» وأخدت ${a} نقطة (10% من نقاطك).`);if(live(ch).length<=1)endCh(S,ch,now,u);S.set('chs',ch.code,ch);return{ch,a}}
+};
+const RO={me:1,prof:1,chGet:1,chPeek:1};
+function signup(S,d){const c=cfgOf(S);if(c.f.signup===0)return err('التسجيل متوقف حالياً من الإدارة.');const n=String(d.name||'').trim().slice(0,40),p=nph(d.phone);
+if(n.length<2)return err('الاسم ناقص.');if(!/^01\d{9}$/.test(p))return err('رقم التلفون لازم يبقى 11 رقم ويبدأ بـ 01.');if(!/^[0-9a-f]{64}$/.test(d.hash||''))return err('كلمة المرور غير صالحة.');if(['إعدادي','ثانوي'].indexOf(d.stage)<0)return err('المرحلة غير صحيحة.');
+return S.lock(()=>{if(S.get('users',p))return err('الرقم ده مسجل قبل كده. سجّل دخول.');const salt=rnd(10),t=rnd(32),u=nrm({phone:p,name:n,salt,hash:sha(salt+d.hash),stage:d.stage,grade:String(d.grade||'').slice(0,20),sys:String(d.sys||'').slice(0,20),track:String(d.track||'').slice(0,30),sp:String(d.sp||'').slice(0,40),plan:null,created:Date.now(),seen:Date.now(),toks:[t],banned:0});S.set('users',p,u);return ok({t,u:pub(u),cfg:pubCfg(c)})})}
+function login(S,d){const p=nph(d.phone),now=Date.now();return S.lock(()=>{const u=S.get('users',p);if(!u)return err('مفيش حساب بالرقم ده.');nrm(u);u.fl=(u.fl||[]).filter(t=>now-t<6e5);if(u.fl.length>=8)return err('محاولات كتير غلط. جرّب بعد 10 دقايق.');
+if(sha(u.salt+d.hash)!=u.hash){u.fl.push(now);S.set('users',p,u);return err('كلمة المرور غلط.')}if(u.banned)return err('BANNED',{e:'BANNED',m:u.banMsg||''});u.fl=[];const t=rnd(32);u.toks=(u.toks||[]).slice(-4).concat(t);u.seen=now;S.set('users',p,u);return ok({t,u:pub(u),cfg:pubCfg(cfgOf(S))})})}
+function handle(S,q){try{const a=String(q.a||''),d=q.d||{};
+if(a=='cfg')return ok({cfg:pubCfg(cfgOf(S))});if(a=='signup')return signup(S,d);if(a=='login')return login(S,d);if(a.slice(0,2)=='ad')return admin(S,q);
+const fn=A[a];if(!fn)return err('طلب غير معروف.');
+const run=()=>{const u=S.get('users',String(q.p||''));if(!u||!(u.toks||[]).includes(q.t))return{ok:0,e:'AUTH'};nrm(u);if(u.banned)return{ok:0,e:'BANNED',m:u.banMsg||''};const now=Date.now(),r=fn(S,u,d,now)||{};
+if(r.ok===0){if(r.sv&&!RO[a])S.set('users',u.phone,u);return Object.assign(r,{u:pub(u),now})}if(!RO[a]){u.seen=now;S.set('users',u.phone,u)}return ok(Object.assign({u:pub(u)},r))};
+return RO[a]?run():S.lock(run)}catch(x){return err('خطأ في السيرفر: '+(x&&x.message||x))}}
+const ADRO={adStats:1,adUsers:1,adUser:1,adChs:1,adCfgGet:1};
+function admin(S,q){const d=q.d||{},now=Date.now(),a=q.a;
+if(a=='adLogin'){const pw=S.prop('ADMIN_PASS');if(!pw)return err('لسه ما ضفتش ADMIN_PASS في Script Properties.');if(d.pass!==pw)return err('كلمة سر الأدمن غلط.');return S.lock(()=>{const c=cfgOf(S),tok=rnd(32);c.admToks=c.admToks.filter(x=>x.exp>now).slice(-5).concat({tok,exp:now+432e5});S.set('cfg','main',c);return ok({tok})})}
+if(!cfgOf(S).admToks.some(x=>x.tok==q.t&&x.exp>now))return{ok:0,e:'ADAUTH'};
+const gu=p=>{const u=S.get('users',nph(d.phone));return u?nrm(u):null},NU='الحساب غير موجود.';
+const run=()=>{switch(a){
+case'adStats':{const us=S.all('users'),chs=S.all('chs');return ok({users:us.length,banned:us.filter(u=>u.banned).length,online:us.filter(u=>now-(u.seen||0)<3e5).length,pts:us.reduce((x,u)=>x+(u.pts||0),0),lobby:chs.filter(c=>c.status=='lobby').length,active:chs.filter(c=>c.status=='active').length,ended:chs.filter(c=>c.status=='ended').length})}
+case'adUsers':return ok({users:S.all('users').map(u=>({phone:u.phone,name:u.name,stage:u.stage,grade:u.grade,sys:u.sys,track:u.track,pts:u.pts||0,spent:u.spent||0,lv:lvl((u.pts||0)+(u.spent||0)),streak:u.streak||0,banned:!!u.banned,created:u.created,seen:u.seen||0,fr:(u.friends||[]).length,chs:(u.chs||[]).length}))});
+case'adUser':{const u=gu();if(!u)return err(NU);const o=pub(u);o.log=(u.log||[]).slice(-30);return ok({user:o})}
+case'adBan':{const u=gu();if(!u)return err(NU);u.banned=d.on?1:0;u.banMsg=String(d.msg||'').slice(0,200);S.set('users',u.phone,u);return ok()}
+case'adPts':{const u=gu();if(!u)return err(NU);const old=u.pts;u.pts=Math.max(0,d.set!=null?Math.floor(+d.set):old+Math.floor(+d.delta||0));const df=u.pts-old;if(df)u.notes.push(df>0?`الإدارة أضافت لك ${df} نقطة.`:`الإدارة خصمت منك ${-df} نقطة.`);S.set('users',u.phone,u);return ok({pts:u.pts})}
+case'adReset':{const u=gu();if(!u)return err(NU);if(!/^[0-9a-f]{64}$/.test(d.hash||''))return err('كلمة مرور غير صالحة.');u.hash=sha(u.salt+d.hash);u.toks=[];S.set('users',u.phone,u);return ok()}
+case'adEdit':{const u=gu();if(!u)return err(NU);['name','stage','grade','sys','track','sp'].forEach(k=>{if(d[k]!=null)u[k]=String(d[k]).slice(0,40)});S.set('users',u.phone,u);return ok()}
+case'adGrant':{const u=gu();if(!u)return err(NU);const key=d.k+':'+d.id;if(!PR0[d.k]||PR0[d.k][d.id]==null)return err('عنصر غير موجود.');if(d.on){if(!u.inv.includes(key))u.inv.push(key)}else{u.inv=u.inv.filter(x=>x!=key);if(u.eq[d.k]==d.id)delete u.eq[d.k]}S.set('users',u.phone,u);return ok({inv:u.inv})}
+case'adDel':{const u=gu();if(!u)return err(NU);S.all('users').forEach(x=>{if(x.phone==u.phone)return;let c=0;['friends','fr','sent'].forEach(k=>{if((x[k]||[]).includes(u.phone)){x[k]=x[k].filter(y=>y!=u.phone);c=1}});if(c)S.set('users',x.phone,x)});S.del('users',u.phone);return ok()}
+case'adChs':return ok({chs:S.all('chs').slice(-200).map(c=>({code:c.code,name:c.name,status:c.status,created:c.created,start:c.start,members:c.members.map(m=>m[0]=='b'?{id:m,n:m.split('_')[2],b:1}:{id:m,n:(S.get('users',m)||{}).name||m})}))});
+case'adChEnd':{const ch=S.get('chs',String(d.code||''));if(!ch)return err('التحدي غير موجود.');if(ch.status!='active')return err('التحدي مش شغال.');endCh(S,ch,now,null);S.set('chs',ch.code,ch);return ok()}
+case'adChDel':S.del('chs',String(d.code||''));return ok();
+case'adCfgGet':{const c=cfgOf(S);return ok({cfg:{f:c.f,pr:c.pr,ann:c.ann||null}})}
+case'adCfgSet':{const c=cfgOf(S);if(d.f)c.f=Object.assign(c.f,d.f);if(d.pr)c.pr=d.pr;if(d.ann!==undefined)c.ann=d.ann?{id:now,text:String(d.ann).slice(0,300)}:null;S.set('cfg','main',c);return ok()}
+case'adBroadcast':{const t=String(d.text||'').slice(0,300);if(!t)return err('اكتب الرسالة.');let n=0;S.all('users').forEach(u=>{nrm(u);u.notes.push('رسالة من الإدارة: '+t);if(u.notes.length>40)u.notes.splice(0,u.notes.length-40);S.set('users',u.phone,u);n++});return ok({n})}
+default:return err('طلب أدمن غير معروف.')}};
+return ADRO[a]?run():S.lock(run)}
+return{handle,sha,sd,botPts,lvl,myP,PR0,nph}})();
+
+const API_URL='https://script.google.com/macros/s/AKfycby8tKlIhbM8zd0_0Y4ANJxh-PGoJkscRM7d7QAbrFZUs6aTTsBX_Z8wjGl4QU8iycY/exec';
+const lget=(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}};
+const lset=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const HB0=+(()=>{try{return localStorage.getItem('p99hb')}catch(e){return 0}})()||0;
+const LSTORE=(()=>{const D=lget('p99s',{});D.users=D.users||{};D.chs=D.chs||{};D.cfg=D.cfg||{};const cl=x=>x==null?null:JSON.parse(JSON.stringify(x));
+return{get:(c,k)=>cl(D[c][k]),set:(c,k,v)=>{D[c][k]=cl(v);lset('p99s',D)},all:c=>Object.values(D[c]).map(cl),del:(c,k)=>{delete D[c][k];lset('p99s',D)},lock:f=>f(),prop:()=>null}})();
+let NEWS=true;try{NEWS=!sessionStorage.getItem('p99s');sessionStorage.setItem('p99s','1')}catch(e){}
+let AU=lget('p99a',{}),ME=lget('p99m',null),CFG={f:{}},PC={},SK=0,BAN=null,BZ=0,SIG='',MT=0,MB=0,RT=0,RB=0,PT=0;
+if(!ME)AU={};
+let DB={users:{},ch:{},session:AU.p||null};if(AU.p&&ME)DB.users[AU.p]=ME;
+const snow=()=>Date.now()+SK,PI=API_URL?{room:1500,main:10000}:{room:500,main:2000};
+const hash=p=>CORE.sha('99|'+p),me=()=>DB.users[DB.session],mcache=()=>lset('p99m',ME);
+const save=()=>{if(!ME)return;mcache();clearTimeout(PT);PT=setTimeout(()=>call('push',{tasks:ME.tasks,plan:ME.plan},{q:1}),500)};
+async function api(a,d){const q={a,p:AU.p,t:AU.t,d:d||{}};if(!API_URL)return CORE.handle(LSTORE,JSON.parse(JSON.stringify(q)));const r=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(q)});return await r.json()}
+async function call(a,d,o){o=o||{};if(!AU.p&&['signup','login','cfg'].indexOf(a)<0)return{ok:0,e:'NOAUTH'};if(!o.poll)BZ++;let r;
+try{r=await api(a,d)}catch(e){if(!o.poll)BZ--;if(!o.q)toast('مفيش اتصال بالسيرفر. جرّب تاني.','err','مشكلة اتصال');return{ok:0,e:'NET'}}
+if(!o.poll)BZ--;else if(BZ>0)return{ok:0,e:'STALE'};
+if(r.now)SK=r.now-Date.now();if(r.u&&AU.p&&r.u.phone==AU.p){ME=r.u;DB.users[AU.p]=ME;mcache()}if(r.cfg)CFG=r.cfg;if(r.profs)Object.assign(PC,r.profs);if(r.ch){r.ch.full=1;DB.ch[r.ch.code]=r.ch}
+if(!r.ok){if(r.e=='AUTH')logout('انتهت الجلسة، سجّل دخول تاني.');else if(r.e=='BANNED'){BAN={m:r.m};app()}else if(!o.q&&r.e&&r.e!='NOAUTH'&&r.e!='STALE')toast(r.e,'err','تعذّر التنفيذ')}
+return r}
+const PRC=(k,id,d)=>{const o=(CFG.pr||{})[k+':'+id];return o&&o.p!=null?o.p:d};
+const annH=()=>{const a=CFG.ann;if(!a||!a.text||lget('p99ann',0)==a.id)return'';return`<div class="card note">${I('info',24)}<p>${E(a.text)}</p><button class="chip" onclick="lset('p99ann',${a.id});app()">تمام</button></div>`};
+const day=(o=0)=>new Date(Date.now()-new Date().getTimezoneOffset()*6e4-o*864e5).toISOString().slice(0,10);
+Object.assign(P,{check:'<path d="M5 12l5 5 9-11"/>',alert:'<path d="M12 4l9 16H3zM12 10v4M12 17h.01"/>',info:'<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5"/>',star:'<path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/>',bolt:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',crown:'<path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z"/>',book:'<path d="M4 5a2 2 0 012-2h13v16H6a2 2 0 00-2 2zM4 19V5M9 7h6"/>',moon:'<path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/>',rocket:'<path d="M5 19c0-3 1-4 3-5M14 5c3-1.5 5-1.5 6-1 .5 1 .5 3-1 6l-5 5-4-4zM9 15l-3 5 5-3"/>',bag:'<path d="M5 8h14l-1 12H6zM9 8a3 3 0 016 0"/>',play:'<path d="M7 4l13 8-13 8z"/>',pause:'<path d="M8 5v14M16 5v14"/>',next:'<path d="M19 5l-9 7 9 7zM5 5v14"/>',prev:'<path d="M5 5l9 7-9 7zM19 5v14"/>'});
+const TT={ok:['check','#12A36B','تم'],err:['x','#E5484D','فشلت العملية'],warn:['alert','#F5A524','تنبيه'],info:['info','var(--ac)','معلومة'],pts:['star','var(--gd)','نقاط']};
+let toastT;function toast(m,k,t){k=k||(/\+\d/.test(m)?'pts':/الأول|أقل من|وصلت|مستمر/.test(m)?'warn':/غلط|اكتب|لازم|الأقل|مش |تعذّر/.test(m)?'err':/تم|جاهز|اتضاف|اتعمل|برافو|مبروك|انضم|بقى/.test(m)?'ok':'info');const c=TT[k]||TT.info,e=$('#toast');e.style.setProperty('--tc',c[1]);
+e.innerHTML=`<div class="ti">${I(c[0],20)}</div><div><b></b><span></span></div>`;e.querySelector('b').textContent=t||c[2];e.querySelector('span').textContent=m;e.classList.add('on');clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove('on'),3200)}
+
+/* ===== GLOBAL BUSY (جاري...) ===== */
+function busyHTML(old,label){return`<span class="sp" style="width:16px;height:16px;border-width:2px;border-color:currentColor;border-top-color:transparent;margin-inline-end:6px"></span>${label||'جاري...'}`}
+function lockBtn(b,label){if(!b||b.dataset.busy)return null;const st={html:b.innerHTML,w:b.offsetWidth,label:label};b.dataset.busy='1';b.disabled=true;b.style.minWidth=st.w+'px';b.innerHTML=busyHTML(st.html,label);return st}
+function unlockBtn(b,st){if(!b||!st)return;delete b.dataset.busy;b.disabled=false;b.innerHTML=st.html;b.style.minWidth=''}
+async function busy(btn,fn,label){const st=lockBtn(btn,label);try{return await fn()}finally{unlockBtn(btn,st)}}
+
+function ask(o){$('#mb').innerHTML=`<div class="mh">${I(o.ic||'plus',26)}</div><h3>${o.title}</h3><p class="mu" style="margin-bottom:12px">${o.sub||''}</p>${o.html||''}${o.noin?'':`<input id="mi" type="${o.type||'text'}" inputmode="${o.type=='tel'?'tel':'text'}" placeholder="${o.ph||''}" autocomplete="off"><div class="er" id="me"></div>`}${o.gate?`<label class="ag"><input type="checkbox" id="ag"><span>${o.gate}</span></label>`:''}<div class="row"><button class="btn s" id="mc">إلغاء</button><button class="btn" id="mo">${o.btn||'تأكيد'}</button></div>`;
+const cl=()=>$('#md').classList.remove('on'),ok=async()=>{if(o.noin){await run(o.cb,()=>null);cl();return}const v=$('#mi').value.trim(),e=o.chk?o.chk(v):(v?'':'اكتب القيمة المطلوبة');if(e){$('#me').textContent=e;return}await run(()=>o.cb(v),cl)};
+const run=async(fn,after)=>{const b=$('#mo');const st=lockBtn(b);try{await fn()}finally{unlockBtn(b,st);if(after)after()}};
+$('#md').classList.add('on');$('#mc').onclick=cl;$('#mo').onclick=ok;if(o.gate){$('#mo').disabled=true;$('#ag').onchange=e=>{$('#mo').disabled=!e.target.checked}}
+if(!o.noin){const i=$('#mi');i.onkeydown=e=>{if(e.key=='Enter')ok()};setTimeout(()=>i.focus(),60)}}
+
+const B3=['اللغة العربية','اللغة الأجنبية الأولى','التاريخ'];
+const BT={'الطب وعلوم الحياة':{sp:['الفيزياء','الرياضيات'],y3:['الأحياء (مستوى متقدم)','الكيمياء (مستوى متقدم)']},'الهندسة وعلوم الحاسب':{sp:['الكيمياء','البرمجة والذكاء الاصطناعي'],y3:['الرياضيات (مستوى متقدم)','الفيزياء (مستوى متقدم)']},'الأعمال':{sp:['المحاسبة','إدارة الأعمال'],y3:['الاقتصاد (مستوى متقدم)','الرياضيات']},'الآداب والفنون':{sp:['علم النفس','اللغة الأجنبية الثانية'],y3:['الجغرافيا (مستوى متقدم)','الإحصاء']}};
+const A=['اللغة العربية','اللغة الأجنبية الأولى'];
+const ST={p:['اللغة العربية','اللغة الإنجليزية','الرياضيات','العلوم','الدراسات الاجتماعية','الحاسب الآلي'],
+s1:[...A,'الرياضيات','العلوم المتكاملة','الفلسفة والمنطق','التاريخ','اللغة الأجنبية الثانية','البرمجة وعلوم الحاسب'],
+'c2علمي':[...A,'الرياضيات','الفيزياء','الكيمياء','الأحياء','اللغة الأجنبية الثانية'],
+'c2أدبي':[...A,'التاريخ','الجغرافيا','الإحصاء','اللغة الأجنبية الثانية'],
+'c3علمي علوم':[...A,'الأحياء','الكيمياء','الفيزياء','اللغة الأجنبية الثانية'],
+'c3علمي رياضة':[...A,'التفاضل والتكامل','الجبر والهندسة الفراغية','الاستاتيكا','الديناميكا','الفيزياء','الكيمياء'],
+'c3أدبي':[...A,'التاريخ','الجغرافيا','الفلسفة والمنطق','علم النفس والاجتماع','الإحصاء']};
+function subs(u){if(u.stage=='إعدادي')return ST.p;const g=u.grade;if(g=='الصف الأول')return ST.s1;
+if(u.sys=='بكالوريا'&&BT[u.track])return g=='الصف الثاني'?[...B3,u.sp]:[...B3,...BT[u.track].y3];
+return ST[(g=='الصف الثاني'?'c2':'c3')+u.track]||ST.s1}
+const lvl=p=>Math.floor(Math.sqrt(p/20))+1;
+const wk=u=>(u.log||[]).filter(l=>l.d>=day(6)).reduce((a,l)=>a+l.m,0);
+const tdy=u=>(u.log||[]).filter(l=>l.d==day()).reduce((a,l)=>a+l.m,0);
+function logMin(m,pts){const u=me();if(pts)u.pts+=m;(u.log=u.log||[]).push({d:day(),m});if(u.last!=day()){u.streak=u.last==day(1)?u.streak+1:1;u.last=day()}}
+let view='home',tab='in',T={mode:25,run:false,el:0,t0:0,iv:null},CS={v:'list',code:null},BI=0,SG={st:'إعدادي',gd:'الصف الأول',sy:'ثانوي عام',tr:'',sp:''},SH='av',Q={a:new Audio(),i:0,r:'afs',on:0,k:''};
+const QUOTES=['الـ 1% الأخيرة هي اللي بتفرق.','ساعة مذاكرة النهارده أحسن من ساعتين بكرة.','ابدأ بأصعب مادة وانت فايق.','مش لازم تكون مثالي، لازم تكمّل.','كل دقيقة بتتحسب، وبتتحول لنقاط.'];
+
+function auth(){const so=tab=='up';
+$('#app').innerHTML=`<div style="padding-top:20px"><div class="logo">99<b>%</b></div><p class="mu" style="text-align:center;margin:6px 0 20px">رفيق مذاكرتك لحد آخر نسبة</p>
+<div class="tabs"><button class="${so?'':'on'}" onclick="tab='in';auth()">تسجيل الدخول</button><button class="${so?'on':''}" onclick="tab='up';auth()">حساب جديد</button></div>
+<div class="card">${so?`<input id="nm" placeholder="الاسم" autocomplete="name">`:''}
+<input id="ph" type="tel" inputmode="tel" placeholder="رقم التلفون (01xxxxxxxxx)" autocomplete="tel">
+<input id="pw" type="password" placeholder="كلمة المرور" autocomplete="${so?'new-password':'current-password'}">${so?'<div id="sgx"></div>':''}
+<button class="btn" id="authBtn" onclick="${so?'signup(this)':'login(this)'}">${so?'إنشاء الحساب':'دخول'}</button></div></div>`;if(so)sgd()}
+const SGO=()=>{const s=SG,pick=s.st=='ثانوي'&&s.gd!='الصف الأول',bc=s.sy=='بكالوريا';return{pick,bc,tr:!pick?[]:bc?Object.keys(BT):s.gd=='الصف الثاني'?['علمي','أدبي']:['علمي علوم','علمي رياضة','أدبي'],sp:pick&&bc&&s.gd=='الصف الثاني'&&BT[s.tr]?BT[s.tr].sp:[]}};
+const seg=(k,a,lab,two)=>a.length?`<div class="lab">${lab}</div><div class="sg ${two?'two':''}">${a.map(x=>`<button type="button" class="${SG[k]==x?'on':''}" onclick="SG['${k}']='${x}';sgd()">${x}</button>`).join('')}</div>`:'';
+function sgd(){let o=SGO();if(!o.tr.includes(SG.tr))SG.tr=o.tr[0]||'';o=SGO();if(!o.sp.includes(SG.sp))SG.sp=o.sp[0]||'';
+$('#sgx').innerHTML=seg('st',['إعدادي','ثانوي'],'المرحلة',1)+seg('gd',['الصف الأول','الصف الثاني','الصف الثالث'],'الصف')+(o.pick?seg('sy',['ثانوي عام','بكالوريا'],'النظام',1):'')+seg('tr',o.tr,o.bc?'المسار':'الشعبة')+seg('sp',o.sp,'المادة التخصصية',1)}
+const nph=CORE.nph;
+function afterAuth(r){AU={p:r.u.phone,t:r.t};lset('p99a',AU);ME=r.u;DB.session=AU.p;DB.users={};DB.users[AU.p]=ME;DB.ch={};PC={};mcache();view='home';SIG='';MT=0;CS={v:'list',code:null};app();mePoll()}
+
+async function signup(btn){return busy(btn,async()=>{
+const n=$('#nm').value.trim(),p=nph($('#ph').value),w=$('#pw').value;
+if(n.length<2){toast('اكتب اسمك الكامل (حرفين على الأقل).','err','الاسم ناقص');return}
+if(!/^01\d{9}$/.test(p)){toast('رقم التلفون لازم يبقى 11 رقم ويبدأ بـ 01.','err','رقم غير صحيح');return}
+if(w.length<6){toast('كلمة المرور لازم تكون 6 حروف أو أرقام على الأقل.','err','كلمة مرور ضعيفة');return}
+const o=SGO(),r=await call('signup',{name:n,phone:p,hash:hash(w),stage:SG.st,grade:SG.gd,sys:o.pick?SG.sy:'',track:o.tr.length?SG.tr:'',sp:o.sp.length?SG.sp:''});
+if(r.ok){afterAuth(r);toast(`أهلاً يا ${n}، حسابك جاهز وبدأت رحلتك مع 99%.`,'ok','تم إنشاء الحساب')}
+},'جاري...')}
+
+async function login(btn){return busy(btn,async()=>{
+const p=nph($('#ph').value);if(!/^01\d{9}$/.test(p)){toast('اكتب رقم التلفون صح (11 رقم يبدأ بـ 01).','err','رقم غير صحيح');return}
+const r=await call('login',{phone:p,hash:hash($('#pw').value)});
+if(r.ok){afterAuth(r);toast(`أهلاً بعودتك يا ${r.u.name}.`,'ok','تم تسجيل الدخول')}
+},'جاري...')}
+
+function logout(m){clearTimeout(PT);clearInterval(T.iv);T={mode:25,run:false,el:0,t0:0,iv:null};AU={};ME=null;DB.session=null;DB.users={};DB.ch={};PC={};SIG='';lset('p99a',{});try{localStorage.removeItem('p99m');localStorage.removeItem('p99t')}catch(e){}view='home';CS={v:'list',code:null};BAN=null;if(m)toast(m,'warn','تم تسجيل الخروج');app()}
+function banScr(){document.documentElement.removeAttribute('data-mode');$('#app').innerHTML=`<div class="card win" style="margin-top:60px"><div class="ico">${I('alert',36)}</div><h2>حسابك موقوف</h2><p class="mu">${E(BAN.m||'تم إيقاف حسابك من إدارة التطبيق. لو شايف إن ده خطأ تواصل مع الإدارة.')}</p><button class="btn s" style="margin-top:14px" onclick="logout()">تسجيل الخروج</button></div>`;mpui()}
+const info=u=>[u.stage,u.grade,u.sys,u.track,u.sp].filter(Boolean).join(' – ');
+const AR=['أحد','إثنين','ثلاثاء','أربعاء','خميس','جمعة','سبت'];
+function chart(u){const d=[];for(let i=6;i>=0;i--){const k=day(i);d.push({m:(u.log||[]).filter(l=>l.d==k).reduce((a,l)=>a+l.m,0),n:AR[new Date(k+'T12:00').getDay()]})}
+const mx=Math.max(60,...d.map(x=>x.m));return`<div class="card"><h3>نشاطك الأسبوعي</h3><p class="mu" style="margin-bottom:10px">دقائق المذاكرة في آخر 7 أيام</p><div class="ch">${d.map((x,i)=>`<div class="cb"><span>${x.m||''}</span><div class="bw"><i class="${i==6?'t':''}" style="height:${Math.max(3,x.m/mx*100)}%"></i></div><small>${x.n}</small></div>`).join('')}</div></div>`}
+
+function app(){if(BAN)return banScr();if(!me()){DB.session=null;document.documentElement.removeAttribute('data-mode');return auth()}
+const u=me();u.chs=u.chs||[];u.notes=u.notes||[];u.friends=u.friends||[];u.inv=u.inv||[];u.eq=u.eq||{};u.spent=u.spent||0;u.fr=u.fr||[];u.sent=u.sent||[];u.civ=u.civ||[];clearInterval(BI);applyEq(u);
+if(view=='chal'&&CFG.f&&CFG.f.chal===0)view='home';if(view=='chal')document.documentElement.dataset.mode='fire';else document.documentElement.removeAttribute('data-mode');
+let h='';
+if(view=='home'){const tp=u.pts+u.spent,L=lvl(tp),b=20*(L-1)**2,nx=20*L*L,pc=Math.min(100,(tp-b)/(nx-b)*100);
+h=`<div class="top"><div><div class="mu">أهلاً</div><h2 style="margin:0">${nmH(u)}</h2></div><button class="avb" onclick="go('me')" aria-label="البروفايل">${avH(u,44)}</button></div>
+<div class="hero"><div><div>نقاطك</div><div class="n">${u.pts}</div></div><div style="text-align:left;min-width:130px"><b>المستوى ${L}</b><div class="bar"><i style="width:${pc}%"></i></div><small>باقي ${nx-tp} نقطة للمستوى التالي</small></div></div>
+<div class="stats"><div class="stat"><b>${tdy(u)}</b><span class="mu">دقيقة اليوم</span></div><div class="stat"><b>${wk(u)}</b><span class="mu">دقيقة الأسبوع</span></div><div class="stat"><b>${u.last==day()||u.last==day(1)?u.streak:0}</b><span class="mu">أيام متتالية</span></div></div>
+${annH()}${u.fr.length+u.civ.length?`<button class="btn mb" onclick="go('chal')">${I('users',20)} عندك ${u.fr.length+u.civ.length} طلبات جديدة</button>`:''}<div class="card"><h3>ابدأ دلوقتي</h3><p class="mu" style="margin-bottom:12px">${QUOTES[new Date().getDate()%QUOTES.length]}</p><button class="btn g" onclick="go('timer')">${I('timer',20)} ابدأ جلسة مذاكرة</button></div>
+${chart(u)}<button class="btn s" onclick="go('shop')">${I('bag',20)} متجر النقاط</button>`}
+if(view=='timer'){h=`<h2>عداد المذاكرة</h2><div class="chips">${[25,45,60,0].map(m=>`<button class="chip ${T.mode==m?'on':''}" onclick="setM(${m})">${m?m+' دقيقة':'وقت حر'}</button>`).join('')}</div>
+<div class="card"><svg class="ring" viewBox="0 0 220 220"><circle cx="110" cy="110" r="96" fill="none" stroke="var(--sf2)" stroke-width="14"/><circle id="rg" cx="110" cy="110" r="96" fill="none" stroke="var(--ac)" stroke-width="14" stroke-linecap="round" stroke-dasharray="603" stroke-dashoffset="603" transform="rotate(-90 110 110)"/><text id="tm" x="110" y="122" text-anchor="middle" font-size="44" direction="ltr">00:00</text></svg>
+<p class="mu" style="text-align:center;margin-bottom:12px" id="tp"></p><div class="row"><button class="btn" id="tb" onclick="tgl()"></button><button class="btn s" onclick="fin()">إنهاء وحفظ</button></div></div><p class="mu">كل دقيقة مذاكرة = نقطة. النقاط بتتسجل لما تضغط "إنهاء وحفظ".</p>${CFG.f&&CFG.f.quran===0?'':qpl()}`}
+if(view=='tasks'){const o={'عالية':0,'متوسطة':1,'عادية':2},ts=[...u.tasks].sort((a,b)=>a.d-b.d||o[a.p]-o[b.p]);
+h=`<h2>المهام</h2><div class="card"><input id="tt" placeholder="مهمة جديدة (مثال: حل 20 مسألة)"><div class="row"><select id="tp2"><option>عالية</option><option selected>متوسطة</option><option>عادية</option></select><input id="td" type="date"></div><button class="btn" onclick="addT(this)">${I('plus',20)} أضف المهمة</button></div>
+<div class="card">${ts.length?ts.map(t=>`<div class="task ${t.d?'d':''}"><button class="ck" onclick="doT(${t.id},this)" aria-label="إنجاز">${t.d?'✓':''}</button><div class="t">${E(t.t)}<div class="mu">${t.dt||'من غير موعد'}</div></div><span class="pr">${t.p}</span><button class="x" onclick="delT(${t.id},this)" aria-label="حذف">${I('x',20)}</button></div>`).join(''):'<p class="mu">مفيش مهام لسه. اكتب أول مهمة فوق.</p>'}</div>`}
+if(view=='plan'){const S=subs(u);
+h=`<h2>جدول المذاكرة الذكي</h2><div class="card"><h3>المواد اللي هتذاكرها</h3><div class="chips">${S.map(s=>`<button class="chip on" data-s="${s}" onclick="this.classList.toggle('on')">${s}</button>`).join('')}</div>
+<h3>أصعب مادة عندك</h3><select id="pH">${S.map(s=>`<option>${s}</option>`).join('')}</select>
+<h3>ساعات المذاكرة في اليوم</h3><select id="pD"><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6</option></select>
+<h3>هتبدأ الساعة كام؟</h3><select id="pS"><option value="8">8 الصبح</option><option value="15">3 العصر</option><option value="17" selected>5 المغرب</option><option value="19">7 مساءً</option><option value="21">9 مساءً</option></select>
+<h3>يوم الراحة</h3><select id="pO"><option>الجمعة</option><option>السبت</option><option>الخميس</option><option value="">من غير راحة</option></select>
+<h3>الامتحان</h3><select id="pX"><option value="near">قريب (أقل من شهر)</option><option value="far">بعيد</option></select>
+<button class="btn" onclick="mk(this)">اعمل جدولي</button></div>${u.plan?plan(u.plan):''}`}
+if(view=='chal')h=CS.v=='room'&&DB.ch[CS.code]?room(u,DB.ch[CS.code]):chal(u);
+if(view=='shop')h=shop(u);
+if(view=='me'){h=`<div class="top"><h2 style="margin:0">البروفايل</h2><button class="chip" onclick="go('home')">رجوع</button></div><div class="card" style="display:flex;gap:14px;align-items:center">${avH(u,60)}<div><h3 style="margin:0">${nmH(u)}</h3><p class="mu">${u.phone}<br>${info(u)}<br>${u.pts} نقطة، المستوى ${lvl(u.pts+u.spent)}</p></div></div>
+<div class="card"><h3>تغيير كلمة المرور</h3><input id="o" type="password" placeholder="كلمة المرور الحالية"><input id="n" type="password" placeholder="كلمة المرور الجديدة"><button class="btn" onclick="cp(this)">حفظ</button></div>
+<div class="card"><button class="btn s mb" onclick="go('shop')">${I('bag',20)} متجر النقاط</button><button class="btn s mb" onclick="th()">تبديل الوضع الداكن والفاتح</button><button class="btn s" onclick="logout()">تسجيل الخروج</button></div>`}
+const nv=[['home','home','الرئيسية'],['timer','timer','المذاكرة'],['tasks','tasks','المهام'],['plan','plan','جدولي'],['chal','fire','التحدي']];
+$('#app').innerHTML=h+(view=='chal'?'':`<nav>${nv.map(n=>`<button class="${view==n[0]?'on':''}" onclick="go('${n[0]}')">${I(n[1],24)}${n[2]}</button>`).join('')}</nav>`);
+if(view=='timer')paint();
+if(view=='chal'&&CS.v=='room'&&DB.ch[CS.code]&&DB.ch[CS.code].status!='ended'){roomTick();BI=setInterval(roomTick,500)}
+mpui();window.scrollTo(0,0)}
+function go(v){if((v=='chal'&&CFG.f.chal===0)||(v=='shop'&&CFG.f.shop===0))return toast('الميزة دي متوقفة حالياً من الإدارة.','warn','غير متاحة');view=v;if(v=='chal')CS={v:'list',code:null};app()}
+function th(){const r=document.documentElement,d=getComputedStyle(r).getPropertyValue('--bg').trim()=='#120F29';r.dataset.theme=d?'light':'dark'}
+async function cp(btn){return busy(btn,async()=>{const o=$('#o').value,n=$('#n').value;if(n.length<6){toast('كلمة المرور الجديدة لازم 6 حروف أو أرقام على الأقل.','err','كلمة مرور ضعيفة');return}const r=await call('chpw',{o:hash(o),n:hash(n)});if(r.ok){toast('تم تغيير كلمة المرور بنجاح.','ok','تم التحديث');$('#o').value=$('#n').value=''}})}
+function paint(){const e=T.run?Math.floor((Date.now()-T.t0)/1000):T.el;T.el=e;const r=T.mode?Math.max(0,T.mode*60-e):e;
+if(!$('#tm'))return;$('#tm').textContent=String(Math.floor(r/60)).padStart(2,'0')+':'+String(r%60).padStart(2,'0');$('#rg').style.strokeDashoffset=603*(1-(T.mode?Math.min(1,e/(T.mode*60)):(e%3600)/3600));$('#tb').textContent=T.run?'إيقاف مؤقت':e?'كمّل':'ابدأ';$('#tp').textContent=`هتاخد ${Math.floor(e/60)} نقطة لحد دلوقتي`;
+if(T.run&&T.mode&&e>=T.mode*60)fin()}
+let OUT=lget('p99o',[]);const oset=()=>lset('p99o',OUT);let FL=0;
+async function flush(){if(FL||!AU.p||!OUT.length)return;FL=1;while(OUT.length){const o=OUT[0],r=await call(o.a,o.d,{q:1});if(r.e=='NET')break;OUT.shift();oset()}FL=0}
+function study(m){if(!ME)return;ME.pts+=m;(ME.log=ME.log||[]).push({d:day(),m});mcache();OUT.push({a:'study',d:{m}});oset();flush()}
+function tsave(){lset('p99t',{mode:T.mode,run:T.run,el:T.el,t0:T.t0})}
+function tload(){const t=lget('p99t',null);if(!t||!AU.p)return;T.mode=t.mode||25;
+if(t.run){if(NEWS){const hb=Math.min(HB0||t.t0,Date.now()),m=Math.floor(Math.max(0,hb-t.t0)/60000);T.el=0;T.run=false;tsave();if(m>0){study(m);setTimeout(()=>toast(`قفلت التطبيق والعداد شغال، فحفظنا ${m} دقيقة مذاكرة (+${m} نقطة).`,'info','العداد وقف'),700)}else setTimeout(()=>toast('العداد وقف لأنك قفلت التطبيق.','info','العداد وقف'),700)}
+else{T.t0=t.t0;T.run=true;T.el=0;T.iv=setInterval(paint,500)}}else T.el=t.el||0}
+function setM(m){if(T.run||T.el)return toast('أنهِ الجلسة الحالية الأول');T.mode=m;tsave();app()}
+function tgl(){if(T.run){T.run=false;clearInterval(T.iv);paint();tsave()}else{T.t0=Date.now()-T.el*1000;T.run=true;T.iv=setInterval(paint,500);tsave();paint();toast('بدأت الجلسة، ركّز وكل دقيقة بتتحسب.','info','يلا نذاكر')}}
+function fin(){const m=Math.floor(T.el/60);T.run=false;clearInterval(T.iv);T.el=0;tsave();if(m>0){study(m);toast(`برافو! +${m} نقطة`)}else toast('الجلسة أقل من دقيقة، مش هتتسجل');app()}
+async function addT(btn){return busy(btn,async()=>{const t=$('#tt').value.trim();if(!t){toast('اكتب المهمة');return}me().tasks.push({id:Date.now(),t,p:$('#tp2').value,dt:$('#td').value,d:0});save();toast('اتضافت المهمة لقايمتك.','ok','تمت الإضافة');app()},'جاري...')}
+async function doT(id,btn){return busy(btn,async()=>{const k=me().tasks.find(x=>x.id==id);if(!k)return;k.d=k.d?0:1;save();if(k.d)toast('أحسنت، خلصت مهمة جديدة.','ok','مهمة منجزة');app()},'')}
+async function delT(id,btn){return busy(btn,async()=>{const u=me();u.tasks=u.tasks.filter(x=>x.id!=id);save();toast('اتمسحت المهمة من القايمة.','info','تم الحذف');app()},'')}
+const fm=t=>{const h=Math.floor(t/60)%24;return(h%12||12)+':'+String(t%60).padStart(2,'0')+(h>=12?' م':' ص')};
+async function mk(btn){return busy(btn,async()=>{const S=[...document.querySelectorAll('.chip[data-s].on')].map(x=>x.dataset.s);if(!S.length){toast('اختار مادة واحدة على الأقل');return}
+const hd=$('#pH').value,hh=+$('#pD').value,st=+$('#pS').value,off=$('#pO').value,ex=$('#pX').value,pool=[];S.forEach(s=>{pool.push(s);if(s==hd)pool.push(s)});
+const n=Math.max(1,Math.round(hh*60/55));let k=0;
+me().plan=['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء','الخميس','الجمعة'].map(d=>{if(d==off)return{d,off:1};let t=st*60;const b=[];for(let j=0;j<n;j++){b.push({t:fm(t),s:pool[k++%pool.length],m:ex=='near'&&j%3==2?'حل أسئلة وامتحانات':'مذاكرة'});t+=55}return{d,b}});save();toast('اتعمل جدولك الأسبوعي حسب اختياراتك.','ok','الجدول جاهز');app()},'جاري...')}
+const plan=p=>`<h3 style="margin-top:6px">جدولك الأسبوعي</h3><p class="mu" style="margin-bottom:10px">كل فترة 45 دقيقة ومعاها 10 دقايق راحة.</p>`+p.map(d=>`<div class="card day ${d.off?'off':''}"><h3>${d.d}</h3>${d.off?'<p class="mu">يوم راحة، ارتاح عشان تكمّل.</p>':d.b.map(b=>`<div class="blk"><b>${b.t}</b><span>${b.m}: ${b.s}</span></div>`).join('')}</div>`).join('');
+
+/* ===== المتجر والملفات الشخصية ===== */
+const AVC=[['a1','star','#F5A524','#FF6B35'],['a2','bolt','#19A7FF','#5B3DF5'],['a3','crown','#E8B923','#B8860B'],['a4','book','#1F9D55','#0E8FA8'],['a5','moon','#7B3FE4','#E5446D'],['a6','rocket','#FF4A1C','#FFB020']];
+const SHOP={av:[['a1','النجمة',300],['a2','البرق',400],['a3','التاج',900],['a4','الكتاب',500],['a5','القمر',700],['a6','الصاروخ',1000]],
+skin:[['ocean','المحيط',800,'#0E8FA8'],['sunset','الغروب',1000,'#E5446D'],['forest','الغابة',1200,'#1F9D55'],['royal','الملكي',1800,'#7B3FE4']],
+cskin:[['ice','الجليد',1200,'#19A7FF'],['toxic','السام',1500,'#35D44F'],['gold','الذهبي',2200,'#F2B01E'],['neon','النيون',2600,'#D946EF']],
+btn:[['pill','أزرار بيضاوية',600],['sharp','أزرار حادة',600],['glow','أزرار متوهجة',1500]],
+nav:[['float','شريط عائم',900],['mini','شريط مبسّط',700]],
+ns:[['gold','اسم ذهبي',700],['fire','اسم ناري',1000],['neon','اسم نيون',1400],['rain','اسم قوس قزح',2000]]};
+const CAT={av:['صور البروفايل'],skin:['ثيم التطبيق'],cskin:['ثيم التحدي'],btn:['الأزرار'],nav:['التنقل'],ns:['شكل الاسم']};
+function applyEq(u){const r=document.documentElement,e=u.eq||{};['skin','cskin','btn','nav'].forEach(k=>e[k]?r.setAttribute('data-'+k,e[k]):r.removeAttribute('data-'+k))}
+function avH(u,s){const a=AVC.find(x=>x[0]==(u.eq||{}).av),b=`width:${s}px;height:${s}px;`;return a?`<span class="avc" style="${b}background:linear-gradient(135deg,${a[2]},${a[3]})">${I(a[1],Math.round(s*.55))}</span>`:`<span class="avc" style="${b}background:var(--gd);color:#2a1c00;font-weight:900;font-size:${Math.round(s*.45)}px">${E((u.name||'?')[0])}</span>`}
+const nmH=u=>`<span class="${(u.eq||{}).ns?'n-'+u.eq.ns:''}">${E(u.name)}</span>`;
+function pv(k,id,c,u){if(k=='av'){const a=AVC.find(x=>x[0]==id);return`<span class="avc" style="width:56px;height:56px;background:linear-gradient(135deg,${a[2]},${a[3]})">${I(a[1],30)}</span>`}
+if(k=='skin'||k=='cskin')return`<span class="avc" style="width:56px;height:56px;background:${c}"></span>`;if(k=='ns')return`<b class="n-${id}" style="font-size:18px">${E(u.name)}</b>`;
+if(k=='btn')return`<span class="chip on" style="${id=='pill'?'border-radius:999px':id=='sharp'?'border-radius:4px':'box-shadow:0 0 14px var(--ac)'}">معاينة</span>`;return I('home',30)}
+function shop(u){const e=u.eq||{};
+return`<div class="top"><h2 style="margin:0">متجر النقاط</h2><span class="pr" style="font-size:14px;padding:6px 12px">${u.pts} نقطة</span></div><p class="mu" style="margin-bottom:10px">النقاط بتيجي من المذاكرة بس، فكل عنصر هنا لازم تتعب عشانه.</p>
+<div class="chips">${Object.keys(CAT).map(k=>`<button class="chip ${SH==k?'on':''}" onclick="SH='${k}';app()">${CAT[k][0]}</button>`).join('')}</div>
+<div class="gr">${SHOP[SH].filter(x=>!((CFG.pr||{})[SH+':'+x[0]]||{}).off).map(([id,n,pr0,c])=>{const pr=PRC(SH,id,pr0),has=u.inv.includes(SH+':'+id),on=e[SH]==id;return`<div class="it"><div class="pv">${pv(SH,id,c,u)}</div><b>${n}</b><div class="mu" style="margin:2px 0 8px">${has?'ملكك':pr+' نقطة'}</div><button class="btn ${has&&!on?'s':''}" ${on?'disabled':''} onclick="${has?`eqp('${SH}','${id}',this)`:`buy('${SH}','${id}',this)`}">${on?'مُفعّل':has?'تفعيل':'شراء'}</button></div>`}).join('')}</div>
+${e[SH]?`<button class="btn s" style="margin-top:10px" onclick="eqp('${SH}','',this)">الرجوع للشكل الافتراضي</button>`:''}`}
+async function buy(k,id,btn){return busy(btn,async()=>{const u=me(),it=SHOP[k].find(x=>x[0]==id),pr=PRC(k,id,it[2]);if(u.pts<pr){toast(`محتاج ${pr-u.pts} نقطة كمان عشان تشتري "${it[1]}". كمّل مذاكرة!`,'warn','نقاطك مش كفاية');return}
+ask({ic:'bag',title:`شراء "${it[1]}"`,sub:`هيتخصم ${pr} نقطة من رصيدك (${u.pts} نقطة).`,noin:1,btn:'اشترِ',cb:async()=>{const r=await call('buy',{k,id});if(r.ok){toast(`اشتريت "${it[1]}" وتم تفعيله.`,'ok','تمت عملية الشراء');app()}}})},'جاري...')}
+async function eqp(k,id,btn){return busy(btn,async()=>{const r=await call('eqp',{k,id});if(r.ok){toast(id?'تم تفعيل العنصر.':'رجعت للشكل الافتراضي.','ok','تم التحديث');app()}},'جاري...')}
+/* ===== مشغل القرآن ===== */
+const SUR='الفاتحة،البقرة،آل عمران،النساء،المائدة،الأنعام،الأعراف،الأنفال،التوبة،يونس،هود،يوسف،الرعد،إبراهيم،الحجر،النحل،الإسراء،الكهف،مريم،طه،الأنبياء،الحج،المؤمنون،النور،الفرقان،الشعراء،النمل،القصص،العنكبوت،الروم،لقمان،السجدة،الأحزاب،سبأ،فاطر،يس،الصافات،ص،الزمر،غافر،فصلت،الشورى،الزخرف،الدخان،الجاثية،الأحقاف،محمد،الفتح،الحجرات،ق،الذاريات،الطور،النجم،القمر،الرحمن،الواقعة،الحديد،المجادلة،الحشر،الممتحنة،الصف،الجمعة،المنافقون،التغابن،الطلاق،التحريم،الملك،القلم،الحاقة،المعارج،نوح،الجن،المزمل،المدثر،القيامة،الإنسان،المرسلات،النبأ،النازعات،عبس،التكوير،الانفطار،المطففين،الانشقاق،البروج،الطارق،الأعلى،الغاشية،الفجر،البلد،الشمس،الليل،الضحى،الشرح،التين،العلق،القدر،البينة،الزلزلة،العاديات،القارعة،التكاثر،العصر،الهمزة،الفيل،قريش،الماعون،الكوثر،الكافرون،النصر،المسد،الإخلاص،الفلق،الناس'.split('،');
+const R={afs:['مشاري العفاسي','https://server8.mp3quran.net/afs/'],maher:['ماهر المعيقلي','https://server12.mp3quran.net/maher/'],basit:['عبد الباسط عبد الصمد (مجوّد)','https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad/']};
+function qpl(){return`<div class="card" style="margin-top:12px"><h3>${I('book',18)} مشغل القرآن</h3><div class="lab">القارئ</div><select onchange="Q.r=this.value;if(Q.on)qplay()">${Object.keys(R).map(k=>`<option value="${k}" ${Q.r==k?'selected':''}>${R[k][0]}</option>`).join('')}</select><div class="lab">السورة</div><select onchange="Q.i=+this.value;if(Q.on)qplay()">${SUR.map((s,i)=>`<option value="${i}" ${Q.i==i?'selected':''}>${i+1}. ${s}</option>`).join('')}</select><div class="row"><button class="btn s" onclick="qgo(-1)">السابقة</button><button class="btn" id="qb" onclick="qtg(this)">${Q.on?'إيقاف':'تشغيل'}</button><button class="btn s" onclick="qgo(1)">التالية</button></div></div>`}
+function mpui(){const m=$('#mp');if(!m)return;if(!Q.k){m.classList.remove('on');document.body.classList.remove('mpon');m.innerHTML='';return}
+m.classList.add('on');document.body.classList.add('mpon');
+m.innerHTML=`<div class="mi"><b>${SUR[Q.i]}</b><span class="mu">${R[Q.r][0]}</span></div><button class="mbn s" onclick="qgo(-1)" aria-label="السابقة">${I('prev',18)}</button><button class="mbn" onclick="qtg(this)" aria-label="تشغيل أو إيقاف">${I(Q.on?'pause':'play',18)}</button><button class="mbn s" onclick="qgo(1)" aria-label="التالية">${I('next',18)}</button><button class="mbn s" onclick="qx()" aria-label="إغلاق المشغل">${I('x',18)}</button>`}
+function qui(){const b=$('#qb');if(b)b.textContent=Q.on?'إيقاف':'تشغيل';mpui()}
+function qplay(){const u=R[Q.r][1]+String(Q.i+1).padStart(3,'0')+'.mp3';if(Q.k!=u){Q.k=u;Q.a.src=u}mpui();Q.a.play().then(()=>{Q.on=1;qui()}).catch(()=>{Q.on=0;qui();toast('تعذّر تشغيل الصوت. تأكد من الإنترنت، ولو بتفتح التطبيق من داخل المحادثة افتح الرابط في المتصفح.','err','التشغيل غير متاح')})}
+async function qtg(btn){return busy(btn,async()=>{if(Q.on){Q.a.pause();Q.on=0;qui()}else qplay()},'جاري...')}
+function qgo(d){Q.i=(Q.i+d+114)%114;if(Q.k)qplay();app()}
+function qx(){Q.k='';Q.on=0;Q.a.pause();Q.a.removeAttribute('src');qui()}
+Q.a.onended=()=>qgo(1);
+Q.a.onerror=()=>{if(Q.k){Q.on=0;qui()}};
+/* ===== التحدي ===== */
+const NM=['أحمد المنصوري','مريم خالد','يوسف عادل','نور هشام','سلمى طارق','عمر حسام','هدى سمير','كريم ناصر','آية محمود','مصطفى رضا','ليلى أشرف','زياد وائل'];
+const nm=id=>id[0]=='b'?id.split('_')[2]:(id==AU.p&&ME?ME.name:(PC[id]||{}).name)||id;
+const sd=CORE.sd,botPts=(ch,id)=>CORE.botPts(ch,id,snow());
+const myP=(ch,id)=>Math.floor(((ch.sec&&ch.sec[id]||0)+(ch.run&&ch.run[id]?(snow()-ch.run[id])/1000:0))/60);
+const sc=ch=>ch.members.map(id=>({id,n:nm(id),b:id[0]=='b',o:!!(ch.out&&ch.out[id]),p:id[0]=='b'?botPts(ch,id):myP(ch,id)})).sort((a,b)=>b.p-a.p);
+function pf(id){if(id[0]!='b'){const u=id==AU.p&&ME?ME:(PC[id]||{name:id,eq:{}});return{name:u.name,eq:u.eq||{},lv:u.lv||(id==AU.p?lvl((ME.pts||0)+(ME.spent||0)):1)}}
+const r=sd('p'+id),a=AVC[Math.floor(r()*(AVC.length+2))],n=['','','gold','fire','neon','rain'][Math.floor(r()*6)];return{name:nm(id),eq:{av:a?a[0]:'',ns:n},lv:2+Math.floor(r()*8)}}
+const who=(id,s,me2)=>{const p=pf(id);return`<div class="wh">${avH(p,s||36)}<div class="wn"><div>${nmH(p)}${me2?' (أنت)':''}</div><span class="lvb">${I('star',11)} المستوى ${p.lv}</span></div></div>`};
+const rdyOf=(ch,id)=>id[0]=='b'?snow()-((ch.bt&&ch.bt[id])||0)>6000+sd(id)()*26000:(ch.ready||[]).includes(id);
+const allRdy=ch=>ch.members.length>=2&&ch.members.every(id=>rdyOf(ch,id));
+const memH=(ch,u)=>ch.members.map(id=>`<div class="lb">${who(id,38,id==u.phone)}<span class="pr">${rdyOf(ch,id)?'مستعد':'مش مستعد'}</span></div>`).join('');
+const msgH=ch=>(ch.msgs||[]).filter(m=>snow()-m.t<10000).map(m=>`<div class="card note">${who(m.by,34)}<p style="flex:none;font-weight:800;color:var(--ac)">استعد!</p></div>`).join('');
+const cdH=ch=>ch.cd?`التحدي هيبدأ بعد <span class="big" style="font-size:36px">${Math.max(1,5-Math.floor((snow()-ch.cd)/1000))}</span>`:ch.members.length<2?'محتاج مشارك تاني على الأقل.':'التحدي هيبدأ لما كل المشاركين يضغطوا "استعد".';
+const board=(ch,u)=>sc(ch).map((x,i)=>`<div class="lb ${x.id==u.phone?'f':''}"><div class="rk">${i+1}</div>${who(x.id,38,x.id==u.phone)}${x.o?'<span class="pr">استسلم</span>':''}<b>${x.p}</b><span class="mu">نقطة</span></div>`).join('');
+const hd=(t,bk)=>`<div class="fh"><button class="ib" onclick="${bk}" aria-label="رجوع">${I('back')}</button><div class="fl">${I('fire',24)} ${t}</div></div>`;
+const RL=`<ol class="rl"><li>التحدي بيبدأ لما كل المشاركين يضغطوا "استعد"، وبعدها عد تنازلي 5 ثواني.</li><li>الفايز هو صاحب أعلى نقاط تحدي.</li><li>نقاط التحدي منفصلة عن نقاطك الأساسية، وبتزيد لحظياً مع عداد التحدي: كل دقيقة = نقطة، وبتظهر فوراً في الترتيب.</li><li>إنهاء التحدي بيحتاج موافقة كل المشاركين.</li><li>لو استسلمت بتخرج من التحدي وبتاخد 10% بس من نقاطك.</li><li>عند الإنهاء الفايز بياخد نقاط التحدي بتاعته في حسابه الأساسي، وباقي المشاركين بياخدوا ربع نقاط الفايز بالرقم الصحيح من غير كسور.</li><li>لو حصل تعادل كل واحد بياخد نقاطه.</li><li>لو مفيش لاعبين متاحين ممكن النظام يضيف لك لاعب تلقائياً من المتاحين.</li></ol>`;
+const agree=(btn,cb)=>ask({ic:'flag',title:'تعليمات التحدي',sub:'اقرأها كويس قبل ما تدخل.',noin:1,btn,html:RL,gate:'قرأت التعليمات وأوافق عليها',cb});
+function chal(u){const L=u.chs.map(c=>DB.ch[c]).filter(Boolean).reverse(),st={lobby:'في الانتظار',active:'شغال',ended:'انتهى'};
+const rq=u.fr.map(p=>`<div class="card"><div class="mu" style="margin-bottom:8px">طلب صداقة</div><div class="lb" style="border:0;padding:0">${who(p,42)}</div><div class="row" style="margin-top:10px"><button class="btn" onclick="accF('${p}',this)">قبول</button><button class="btn s" onclick="decF('${p}',this)">رفض</button></div></div>`).join('')+u.civ.map(v=>{const c=DB.ch[v.code];return c?`<div class="card"><div class="mu" style="margin-bottom:8px">دعوة لتحدي «${E(c.name)}»</div><div class="lb" style="border:0;padding:0">${who(v.by,42)}</div><div class="row" style="margin-top:10px"><button class="btn" onclick="accC('${v.code}',this)">قبول</button><button class="btn s" onclick="decC('${v.code}',this)">رفض</button></div></div>`:''}).join('');
+return hd('تحدي 99',"go('home')")+u.notes.map((n,i)=>`<div class="card note">${I('trophy',26)}<p>${E(n)}</p><button class="chip" onclick="noteDel(${i})">تمام</button></div>`).join('')+rq+
+`<button class="btn mb" onclick="mkCh(this)">${I('flag',20)} ابدأ تحدي جديد</button><div class="row mb"><button class="btn s" onclick="jnCh(this)">${I('key',20)} دخول بكود</button><button class="btn s" onclick="adF(this)">${I('users',20)} إضافة صديق</button></div>
+<h3 style="margin-top:8px">تحدياتي</h3>${L.length?L.map(c=>`<div class="card cc" role="button" tabindex="0" onclick="enterRoom('${c.code}')"><div class="ico">${I('trophy',22)}</div><div style="flex:1"><b>${E(c.name)}</b><div class="mu">${c.members.length} مشاركين</div></div><span class="pr">${st[c.status]}</span></div>`).join(''):'<div class="card"><p class="mu">مفيش تحديات لسه. اعمل تحدي جديد، وادعُ أصحابك أو ابحث عن لاعبين تتحدى معاهم.</p></div>'}
+<div class="card"><h3>أصحابي</h3>${u.friends.length?u.friends.map(f=>`<div class="lb">${who(f,38)}</div>`).join(''):'<p class="mu">ابعت طلب صداقة برقم تلفون صاحبك، ولما يقبل تقدر تدعوه للتحدي.</p>'}${u.sent.length?`<p class="mu" style="margin-top:8px">في انتظار رد: ${u.sent.map(x=>E(nm(x))).join('، ')}</p>`:''}</div>`}
+function eok(q,m){return m[0]=='b'?snow()-q.t>8000+sd(m+q.t)()*30000:q.ok.includes(m)}
+const live=ch=>ch.members.filter(m=>!(ch.out&&ch.out[m]));
+const chkEnd=ch=>!!ch.endReq&&live(ch).every(m=>eok(ch.endReq,m));
+function eqH(ch,u){const q=ch.endReq;if(!q)return'';
+return`<div class="card note" style="flex-wrap:wrap"><p style="flex-basis:100%"><b>${E(nm(q.by))}</b> طلب إنهاء التحدي، ولازم كل المشاركين يوافقوا.</p>${live(ch).map(m=>`<span class="pr">${E(nm(m))}: ${eok(q,m)?'وافق':'في الانتظار'}</span>`).join('')}<div class="row" style="flex-basis:100%;margin-top:8px">${q.by==u.phone?`<button class="btn s" onclick="rej(this)">إلغاء الطلب</button>`:!q.ok.includes(u.phone)?`<button class="btn" onclick="apr(this)">موافق</button><button class="btn s" onclick="rej(this)">رفض</button>`:''}</div></div>`}
+function room(u,ch){if(!ch.full)return hd(E(ch.name||'التحدي'),"CS={v:'list',code:null};app()")+'<div class="card"><p class="mu" style="text-align:center">بنحمّل التحدي...</p></div>';let h=hd(E(ch.name),"CS={v:'list',code:null};app()");
+if(ch.status=='lobby'){const pd=ch.pend||[],fr=u.friends.filter(f=>!ch.members.includes(f)&&!pd.includes(f)),meR=(ch.ready||[]).includes(u.phone);
+h+=`<div id="msgs">${msgH(ch)}</div><div class="card"><h3>المشاركين (${ch.members.length})</h3><div id="mem">${memH(ch,u)}</div><p class="mu" style="margin-top:8px">كود الدخول: <b>${ch.code}</b></p></div>
+<div class="card"><h3>ادعُ أصحابك</h3>${fr.length?`<div class="chips">${fr.map(f=>`<button class="chip" onclick="inv('${f}',this)">دعوة ${E(nm(f))}</button>`).join('')}</div>`:'<p class="mu" style="margin-bottom:10px">مفيش أصحاب متاحين. ابعت طلب صداقة بالرقم من صفحة التحديات.</p>'}${pd.length?`<p class="mu" style="margin-bottom:10px">في انتظار الرد: ${pd.map(x=>E(nm(x))).join('، ')}</p>`:''}<button class="btn s" onclick="srch(this)">${I('users',20)} ابحث عن أشخاص للعب معي</button></div>
+<div class="card"><div id="cdn" class="mu" style="text-align:center;margin-bottom:10px">${cdH(ch)}</div><button class="btn" id="rdy" onclick="rdy(this)">${meR?'إلغاء الاستعداد':'استعد'}</button></div>`}
+if(ch.status=='active'){const mo=ch.out&&ch.out[u.phone];
+h+=`<div id="eq">${eqH(ch,u)}</div>${mo?`<div class="card"><p class="mu">أنت استسلمت وخرجت من التحدي. تقدر تتابع الترتيب لحد ما يخلص.</p></div>`:`<div class="card"><div class="mu" style="text-align:center">عداد التحدي</div><div class="big" id="ct">00:00:00</div><p class="mu" style="text-align:center;margin-bottom:12px">نقاطك في التحدي: <b id="cn">0</b></p><button class="btn" id="cb" onclick="cTgl(this)"></button></div>`}
+<div class="card"><h3>الترتيب المباشر</h3><div id="sb">${board(ch,u)}</div></div>${mo?'':`<div class="row"><button class="btn s" onclick="reqEnd(this)">${I('flag',18)} إنهاء التحدي</button><button class="btn s" onclick="sur(this)">${I('x',18)} استسلام</button></div>`}`}
+if(ch.status=='ended'){const r=ch.res,mine=r.aw[u.phone]||0,won=r.win==u.phone;
+h+=`<div class="card win"><div class="ico">${I('trophy',36)}</div><h2>${r.tie?'تعادل!':won?'مبروك، أنت الفايز!':'انتهى التحدي'}</h2><p class="mu">${r.prize?(r.tie?'كل واحد أخد نقاطه.':`الفايز: <b>${E(r.wn)}</b> بـ ${r.prize} نقطة`):'محدش ذاكر في التحدي ده.'}</p>${r.prize&&!r.tie?`<p class="mu" style="margin-top:6px">تم إرسال تهنئة إلى ${E(r.wn)}.</p>`:''}${mine?`<h3 style="margin-top:12px">+${mine} نقطة اتضافت لحسابك</h3>`:''}</div><div class="card"><h3>النتيجة النهائية</h3>${board(ch,u)}</div>`}
+return h}
+async function mkCh(btn){return busy(btn,()=>ask({ic:'flag',title:'تحدي جديد',sub:'اختار اسم للتحدي وضيف أصحابك بعد كده.',ph:'مثال: تحدي الأسبوع',btn:'إنشاء',cb:async n=>{const r=await call('chNew',{name:n});if(r.ok){CS={v:'room',code:r.code};toast(`اتعمل تحدي "${n}". ادعُ أصحابك أو ابحث عن لاعبين.`,'ok','تم إنشاء التحدي');app()}}}),'جاري...')}
+async function jnCh(btn){return busy(btn,()=>ask({ic:'key',title:'دخول تحدي',sub:'اكتب الكود اللي صاحبك بعته.',ph:'الكود',btn:'التالي',cb:async v=>{const k=v.toUpperCase(),r=await call('chPeek',{code:k});if(!r.ok)return;agree('ادخل التحدي',async()=>{const j=await call('chJoin',{code:k});if(j.ok){CS={v:'room',code:k};toast(`دخلت تحدي "${r.name}".`,'ok','تم الانضمام');app()}})}}),'جاري...')}
+async function adF(btn){return busy(btn,()=>ask({ic:'users',title:'طلب صداقة',sub:'اكتب رقم تلفون صاحبك المسجل في 99%، وهيوصله طلب يقبله أو يرفضه.',ph:'01xxxxxxxxx',type:'tel',btn:'إرسال الطلب',chk:p=>/^01\d{9}$/.test(nph(p))?'':'اكتب رقم صحيح من 11 رقم',cb:async p=>{const r=await call('fReq',{to:nph(p)});if(r.ok){toast(`بعتنا طلب صداقة لـ ${r.name}. هتبقوا أصحاب لما يقبل.`,'info','تم إرسال الطلب');app()}}}),'جاري...')}
+async function accF(p,btn){return busy(btn,async()=>{const r=await call('fAcc',{from:p});if(r.ok){toast(`${nm(p)} بقى من أصحابك.`,'ok','تم قبول الطلب')}app()},'جاري...')}
+async function decF(p,btn){return busy(btn,async()=>{const r=await call('fDec',{from:p});if(r.ok)toast('تم رفض الطلب.','info','تم الرفض');app()},'جاري...')}
+async function inv(id,btn){return busy(btn,async()=>{const r=await call('chInv',{code:CS.code,to:id});if(r.ok)toast(`بعتنا دعوة لـ ${r.name}. هيدخل لما يقبل.`,'info','تم إرسال الدعوة');app()},'جاري...')}
+async function accC(code,btn){return busy(btn,()=>agree('ادخل التحدي',async()=>{const r=await call('chAcc',{code});if(r.ok){CS={v:'room',code};toast('دخلت التحدي.','ok','تم الانضمام')}app()}),'جاري...')}
+async function decC(code,btn){return busy(btn,async()=>{const r=await call('chDec',{code});if(r.ok)toast('تم رفض الدعوة.','info','تم الرفض');app()},'جاري...')}
+function noteDel(i){ME.notes.splice(i,1);app();call('noteDel',{i},{q:1})}
+async function enterRoom(code){CS={v:'room',code};const c=DB.ch[code];if(c&&c.full){RT=0;app();return}app();await call('chGet',{code});if(!(DB.ch[code]&&DB.ch[code].full))CS={v:'list',code:null};app()}
+async function srch(btn){const ch=DB.ch[CS.code];if(ch.members.length>=6)return toast('التحدي وصل للحد الأقصى من المشاركين.','warn','التحدي مكتمل');
+return busy(btn,()=>new Promise(res=>{
+$('#mb').innerHTML=`<div class="mh"><span class="sp"></span></div><h3>بنبحث عن لاعبين</h3><p class="mu">بنختار حد قريب من مستواك...</p>`;$('#md').classList.add('on');
+setTimeout(async()=>{$('#md').classList.remove('on');const r=await call('chSrch',{code:CS.code});if(r.ok)toast(`${r.name} انضم للتحدي وجاهز يتحداك.`,'ok','لقينا لاعب');app();res()},2500+Math.random()*2500)
+}),'جاري...')}
+async function rdy(btn){const ch=DB.ch[CS.code],u=me();ch.ready=ch.ready||[];const on=!ch.ready.includes(u.phone);
+if(on&&ch.members.length<2){toast('محتاج مشارك تاني على الأقل. ادعُ صاحبك أو ابحث عن لاعب.','warn','مفيش مشاركين كفاية');return}
+return busy(btn,()=>new Promise(res=>{const go2=async ag=>{if(on){ch.ready.push(u.phone);(ch.msgs=ch.msgs||[]).push({by:u.phone,t:snow()})}else{ch.ready=ch.ready.filter(x=>x!=u.phone);ch.cd=null}app();const r=await call('chRdy',{code:CS.code,on,ag});if(r.ok&&on)toast('بلّغنا باقي المجموعة إنك مستعد.','ok','أنت مستعد');if(!r.ok)app();res()};
+if(on&&!(ch.ag||[]).includes(u.phone))agree('أوافق وأستعد',go2);else go2(0)}),'جاري...')}
+function paintL(){const ch=DB.ch[CS.code];if(!ch||ch.status!='lobby')return;const u=me();if($('#mem'))$('#mem').innerHTML=memH(ch,u);if($('#msgs'))$('#msgs').innerHTML=msgH(ch);if($('#cdn'))$('#cdn').innerHTML=cdH(ch)}
+function paintC(){const ch=DB.ch[CS.code];if(!ch||ch.status!='active')return;const u=me(),e=$('#ct');
+if(e){const s=(ch.sec&&ch.sec[u.phone]||0)+(ch.run&&ch.run[u.phone]?Math.floor((snow()-ch.run[u.phone])/1000):0),f=n=>String(n).padStart(2,'0');e.textContent=f(Math.floor(s/3600))+':'+f(Math.floor(s%3600/60))+':'+f(s%60);const cb=$('#cb');if(cb&&!cb.dataset.busy)cb.textContent=ch.run&&ch.run[u.phone]?'إيقاف مؤقت':s?'كمّل المذاكرة':'ابدأ المذاكرة';$('#cn').textContent=myP(ch,u.phone)}
+if($('#sb'))$('#sb').innerHTML=board(ch,u);if($('#eq'))$('#eq').innerHTML=eqH(ch,u)}
+async function cTgl(btn){const ch=DB.ch[CS.code],id=me().phone;ch.run=ch.run||{};ch.sec=ch.sec||{};
+return busy(btn,async()=>{
+if(ch.run[id]){ch.sec[id]=(ch.sec[id]||0)+Math.floor((snow()-ch.run[id])/1000);ch.run[id]=0;toast('العداد وقف. نقاطك اتسجلت.','info','إيقاف مؤقت')}else{ch.run[id]=snow();toast('العداد شغال، وكل دقيقة بتتحسب لك فوراً في الترتيب.','info','بدأت المذاكرة')}
+await call('chTog',{code:CS.code});app()},'جاري...')}
+async function reqEnd(btn){return busy(btn,async()=>{const r=await call('chReqEnd',{code:CS.code});if(r.ok)toast('بعتنا طلب الإنهاء لكل المشاركين. التحدي هينتهي لما الكل يوافق.','info','تم إرسال الطلب');app()},'جاري...')}
+async function apr(btn){return busy(btn,async()=>{await call('chApr',{code:CS.code});app()},'جاري...')}
+async function rej(btn){return busy(btn,async()=>{const r=await call('chRej',{code:CS.code});if(r.ok)toast('تم إلغاء طلب الإنهاء والتحدي مستمر.','warn','التحدي مستمر');app()},'جاري...')}
+async function sur(btn){return busy(btn,()=>ask({ic:'flag',title:'تستسلم؟',sub:'هتخرج من التحدي وتاخد 10% بس من نقاطك، ومش هتقدر ترجع.',noin:1,btn:'استسلم',cb:async()=>{const r=await call('chSur',{code:CS.code});if(r.ok){toast(r.a?`خرجت من التحدي وأخدت ${r.a} نقطة (10% من نقاطك).`:'خرجت من التحدي من غير نقاط.','warn','استسلمت');if(DB.ch[CS.code].status!='ended')CS={v:'list',code:null}}app()}}),'جاري...')}
+async function roomTick(){const ch=DB.ch[CS.code];if(!ch||!ch.full)return;ch.status=='lobby'?paintL():paintC();
+const now=Date.now(),need=(ch.status=='lobby'&&ch.cd&&snow()-ch.cd>=5000)||(ch.status=='active'&&chkEnd(ch));
+if(RB||BZ>0||(!need&&now-RT<PI.room))return;RB=1;RT=now;const old=ch.status,code=CS.code,r=await call('chGet',{code},{q:1,poll:1});RB=0;
+if(r.e=='STALE'||r.e=='NET')return;if(!r.ok){if(r.e&&['AUTH','BANNED','NOAUTH'].indexOf(r.e)<0){CS={v:'list',code:null};app()}return}
+if(CS.code!=code||view!='chal')return;const n=DB.ch[code];if(!n)return;if(n.status!=old)app();else n.status=='lobby'?paintL():paintC()}
+async function mePoll(first){if(MB||!AU.p)return;MB=1;const r=await call('me',{},{q:1,poll:1});MB=0;if(!r.ok||!ME)return;
+(r.chl||[]).forEach(c=>{const o=DB.ch[c.code];if(o&&o.full){o.name=c.name;if(o.status!=c.status&&!(view=='chal'&&CS.code==c.code))o.full=0;o.status=c.status}else DB.ch[c.code]=c});
+if(first&&NEWS&&(r.runs||[]).length){const hb=HB0||Date.now();for(const code of r.runs)await call('chStop',{code,at:hb},{q:1})}
+const sg=JSON.stringify([ME.fr,ME.civ,ME.notes,ME.pts,ME.eq,ME.inv,(r.chl||[]).map(c=>c.code+c.status),CFG,PC]);
+if(sg!=SIG){SIG=sg;if(!$('#md').classList.contains('on')&&(view=='home'||view=='shop'||view=='me'||(view=='chal'&&CS.v=='list')))app()}}
+addEventListener('visibilitychange',()=>{if(document.hidden)save();else{MT=0;RT=0}});
+const hbw=()=>{try{localStorage.setItem('p99hb',Date.now())}catch(e){}};setInterval(()=>{if(!document.hidden)hbw()},2000);addEventListener('pagehide',hbw);
+setInterval(()=>{if(!AU.p||BAN||document.hidden)return;const n=Date.now();if(n-MT>=PI.main){MT=n;mePoll()}flush()},500);
+tload();if(AU.p){hbw();mePoll(1)}
+app();
+</script>
+</body>
+</html>
